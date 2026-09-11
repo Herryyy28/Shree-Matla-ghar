@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Disallow admin/internal paths if any
+Disallow: /api/
+Disallow: /.env
+
+# Sitemap
+Sitemap: https://shreematlaghar.com/sitemap.xml
