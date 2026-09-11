@@ -19,9 +19,9 @@ export function buildProductUrl(product: Product, customOrigin?: string): string
   
   const path = getProductCanonicalPath(product);
   
-  // Use custom origin, window origin, or production fallback
-  let origin = customOrigin;
-  if (!origin && typeof window !== 'undefined') {
+  // Use custom origin, environment variable, window origin, or fallback
+  let origin = customOrigin || (import.meta.env && import.meta.env.VITE_SITE_URL);
+  if (!origin && typeof window !== 'undefined' && window.location.origin) {
     origin = window.location.origin;
   }
   if (!origin) {
