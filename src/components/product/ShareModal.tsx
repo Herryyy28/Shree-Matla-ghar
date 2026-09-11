@@ -5,6 +5,7 @@ import { useToast } from '../common/Toast';
 import { BUSINESS_CONFIG } from '../../config/business';
 import { trackEvent } from '../../utils/analytics';
 import { QRCodeCard } from '../common/QRCodeCard';
+import { buildProductUrl } from '../../utils/productUrl';
 
 interface ShareModalProps {
   product: Product;
@@ -18,7 +19,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({ product, isOpen, onClose
 
   if (!isOpen) return null;
 
-  const productUrl = `${window.location.origin}/product/${product.slug}`;
+  const productUrl = buildProductUrl(product);
   const shareText = `Check out "${product.name}" on ${BUSINESS_CONFIG.brandName} - ${product.shortDescription}`;
 
   const handleCopyLink = async () => {
@@ -35,7 +36,8 @@ export const ShareModal: React.FC<ShareModalProps> = ({ product, isOpen, onClose
 
   const handleWhatsAppShare = () => {
     trackEvent({ event: 'product_share', category: 'whatsapp', label: product.id });
-    const waUrl = `https://wa.me/?text=${encodeURIComponent(`${shareText}\n\n${productUrl}`)}`;
+    const waText = `Hello ${BUSINESS_CONFIG.brandName},\n\nI am interested in:\n\nProduct: ${product.name}\n\nPlease share the price, available options and availability.\n\nProduct Link:\n${productUrl}\n\nThank you.`;
+    const waUrl = `https://wa.me/${BUSINESS_CONFIG.whatsappNumber}?text=${encodeURIComponent(waText)}`;
     window.open(waUrl, '_blank');
     onClose();
   };

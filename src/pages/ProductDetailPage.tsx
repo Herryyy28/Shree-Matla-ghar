@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { MessageCircle, Share2, ArrowLeft, Check, Info, Package, Plus, Phone, MapPin, Sparkles, ShieldCheck, Truck } from 'lucide-react';
 import { PRODUCTS } from '../data/products';
-import { getProductWhatsAppLink } from '../utils/whatsapp';
+import { getGeneralWhatsAppLink, getProductWhatsAppLink } from '../utils/whatsapp';
 import { updateSeoMetaData } from '../utils/seo';
 import { ProductCard } from '../components/product/ProductCard';
 import { ShareModal } from '../components/product/ShareModal';
@@ -11,13 +11,17 @@ import { useEnquiry } from '../context/EnquiryContext';
 import { FavoriteButton } from '../components/common/FavoriteButton';
 import { BulkEnquiryDrawer } from '../components/common/BulkEnquiryDrawer';
 import { trackProductView } from '../utils/analytics';
-import { ImageWithFallback } from '../components/common/ImageWithFallback';
+import { getProductCanonicalPath, buildProductUrl } from '../utils/productUrl';
 
 export const ProductDetailPage: React.FC = () => {
-  const { slug } = useParams<{ slug: string }>();
+  const { slug, category } = useParams<{ slug?: string; category?: string }>();
   const navigate = useNavigate();
 
-  const product = PRODUCTS.find((p) => p.slug === slug);
+  // Find product by slug or category route param
+  const targetParam = slug || category;
+  const product = PRODUCTS.find(
+    (p) => p.slug === targetParam || p.id === targetParam || p.slug === slug
+  );
 
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [selectedSize, setSelectedSize] = useState<string>('');
@@ -31,7 +35,7 @@ export const ProductDetailPage: React.FC = () => {
       updateSeoMetaData({
         title: `${product.name} | ${BUSINESS_CONFIG.brandName}`,
         description: product.shortDescription,
-        canonicalPath: `/product/${product.slug}`,
+        canonicalPath: getProductCanonicalPath(product),
         image: product.images[0],
         type: 'product',
         product,
@@ -40,20 +44,36 @@ export const ProductDetailPage: React.FC = () => {
       if (product.sizes.length > 0) {
         setSelectedSize(product.sizes[0]);
       }
-      
+
       trackProductView(product.id, product.name, product.category);
     }
   }, [product]);
 
   if (!product) {
     return (
-      <div className="max-w-md mx-auto my-20 p-8 bg-white rounded-3xl border border-clay-200 text-center space-y-4">
-        <span className="text-4xl">🏺</span>
-        <h2 className="font-serif font-bold text-2xl text-clay-900">Product Not Found</h2>
-        <p className="text-xs text-clay-600">The pottery product you are looking for might have been moved or renamed.</p>
-        <Link to="/products" className="inline-block px-6 py-2.5 bg-clay-500 text-white font-bold text-xs rounded-xl">
-          Back to Showroom Catalog
-        </Link>
+      <div className="max-w-md mx-auto my-20 p-8 bg-white rounded-3xl border border-clay-200 text-center space-y-4 shadow-earth">
+        <span className="text-4xl block">🏺</span>
+        <h2 className="font-serif font-bold text-2xl text-clay-900">Pottery Product Not Found</h2>
+        <p className="text-xs text-clay-600 leading-relaxed">
+          The pottery product you are looking for might have been moved or is currently unavailable.
+        </p>
+        <div className="pt-2 flex items-center justify-center gap-3 flex-wrap">
+          <Link
+            to="/pottery"
+            className="px-5 py-2.5 bg-clay-500 hover:bg-clay-600 text-white font-bold text-xs rounded-xl shadow-sm transition-colors"
+          >
+            Browse Pottery
+          </Link>
+          <a
+            href={getGeneralWhatsAppLink()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-sm transition-colors inline-flex items-center gap-1.5"
+          >
+            <MessageCircle className="w-3.5 h-3.5" />
+            <span>WhatsApp Us</span>
+          </a>
+        </div>
       </div>
     );
   }
@@ -71,7 +91,7 @@ export const ProductDetailPage: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-8 pb-28 sm:pb-20">
-      
+
       {/* Navigation Breadcrumbs & Back Button */}
       <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-clay-600 font-medium">
         <nav className="flex items-center gap-1.5 flex-wrap truncate text-[11px] sm:text-xs">
@@ -97,7 +117,7 @@ export const ProductDetailPage: React.FC = () => {
 
       {/* Main Product Info Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
-        
+
         {/* Left Column — Image Gallery */}
         <div className="lg:col-span-6 space-y-3.5 sm:space-y-4">
           <div className="relative aspect-square rounded-3xl overflow-hidden bg-clay-100 border border-clay-200 shadow-earth">
@@ -120,9 +140,8 @@ export const ProductDetailPage: React.FC = () => {
                 <button
                   key={idx}
                   onClick={() => setActiveImageIndex(idx)}
-                  className={`w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border-2 transition-all shrink-0 ${
-                    activeImageIndex === idx ? 'border-clay-500 ring-2 ring-clay-400/30' : 'border-clay-200 opacity-70 hover:opacity-100'
-                  }`}
+                  className={`w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border-2 transition-all shrink-0 ${activeImageIndex === idx ? 'border-clay-500 ring-2 ring-clay-400/30' : 'border-clay-200 opacity-70 hover:opacity-100'
+                    }`}
                 >
                   <ImageWithFallback src={img} alt={`Thumbnail ${idx + 1}`} className="w-full h-full object-cover" />
                 </button>
@@ -133,7 +152,7 @@ export const ProductDetailPage: React.FC = () => {
 
         {/* Right Column — Specs & WhatsApp Actions */}
         <div className="lg:col-span-6 space-y-5 sm:space-y-6">
-          
+
           <div>
             <div className="flex items-center justify-between gap-4">
               <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-clay-600 bg-clay-200/70 px-3 py-1 rounded-md">
@@ -152,7 +171,7 @@ export const ProductDetailPage: React.FC = () => {
             </div>
 
             <h1 className="font-serif font-bold text-fluid-h1 text-clay-900 mt-2">{product.name}</h1>
-            
+
             <div className="mt-3 flex flex-wrap items-center gap-3 sm:gap-4">
               <span className="font-serif font-bold text-xl sm:text-2xl text-clay-900">
                 {product.priceLabel || (product.price ? `₹${product.price}` : 'Price on Request')}
@@ -184,11 +203,10 @@ export const ProductDetailPage: React.FC = () => {
                   <button
                     key={sz}
                     onClick={() => setSelectedSize(sz)}
-                    className={`px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs font-bold transition-all border min-h-[40px] ${
-                      selectedSize === sz
+                    className={`px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs font-bold transition-all border min-h-[40px] ${selectedSize === sz
                         ? 'bg-clay-500 text-white border-clay-500 shadow-sm'
                         : 'bg-white text-clay-800 border-clay-300 hover:bg-clay-100'
-                    }`}
+                      }`}
                   >
                     {sz}
                   </button>
@@ -216,11 +234,10 @@ export const ProductDetailPage: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <button
                 onClick={() => product && addToEnquiry(product)}
-                className={`py-3.5 sm:py-4 font-bold text-xs sm:text-sm rounded-2xl border transition-all flex items-center justify-center gap-2 min-h-[48px] ${
-                  product && isInEnquiry(product.id)
+                className={`py-3.5 sm:py-4 font-bold text-xs sm:text-sm rounded-2xl border transition-all flex items-center justify-center gap-2 min-h-[48px] ${product && isInEnquiry(product.id)
                     ? 'bg-amber-500 text-clay-950 border-amber-500 shadow-md'
                     : 'bg-amber-100 hover:bg-amber-200 text-amber-950 border-amber-300'
-                }`}
+                  }`}
               >
                 {product && isInEnquiry(product.id) ? (
                   <>
@@ -377,9 +394,9 @@ export const ProductDetailPage: React.FC = () => {
       )}
 
       <ShareModal product={product} isOpen={isShareOpen} onClose={() => setIsShareOpen(false)} />
-      <BulkEnquiryDrawer 
-        isOpen={isBulkOpen} 
-        onClose={() => setIsBulkOpen(false)} 
+      <BulkEnquiryDrawer
+        isOpen={isBulkOpen}
+        onClose={() => setIsBulkOpen(false)}
         preselectedProduct={product.name}
       />
     </div>

@@ -8,6 +8,7 @@ import { ImageWithFallback } from '../common/ImageWithFallback';
 import { FavoriteButton } from '../common/FavoriteButton';
 import { BulkEnquiryDrawer } from '../common/BulkEnquiryDrawer';
 import { useEnquiry } from '../../context/EnquiryContext';
+import { getProductCanonicalPath } from '../../utils/productUrl';
 
 interface ProductCardProps {
   product: Product;
@@ -69,7 +70,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
 
         {/* Product Image */}
-        <Link to={`/product/${product.slug}`} className="block relative aspect-[4/3] img-zoom-container bg-clay-100 overflow-hidden">
+        <Link to={getProductCanonicalPath(product)} className="block relative aspect-[4/3] img-zoom-container bg-clay-100 overflow-hidden">
           <ImageWithFallback
             src={product.images[0]}
             alt={product.name}
@@ -90,7 +91,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               <span className="truncate">{product.category}</span>
             </div>
 
-            <Link to={`/product/${product.slug}`}>
+            <Link to={getProductCanonicalPath(product)}>
               <h3 className="font-serif font-bold text-base sm:text-lg text-clay-900 group-hover:text-clay-500 transition-colors line-clamp-1">
                 {product.name}
               </h3>
@@ -138,7 +139,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                   <span>{isEnquired ? 'Enquired' : 'Enquiry'}</span>
                 </button>
                 <Link
-                  to={`/product/${product.slug}`}
+                  to={getProductCanonicalPath(product)}
                   className="px-2.5 sm:px-3 py-2 bg-clay-100 hover:bg-clay-200 text-clay-800 text-[11px] sm:text-xs font-semibold rounded-xl transition-colors min-h-[36px] flex items-center justify-center"
                 >
                   Details

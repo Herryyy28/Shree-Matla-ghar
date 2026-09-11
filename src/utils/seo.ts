@@ -1,5 +1,6 @@
 import { BUSINESS_CONFIG } from '../config/business';
 import { Product } from '../types';
+import { buildProductUrl } from './productUrl';
 
 export interface SeoProps {
   title?: string;
@@ -38,11 +39,12 @@ export function updateSeoMetaData(props: SeoProps) {
   metaDesc.setAttribute('content', description);
 
   // Open Graph
+  const fullCanonicalUrl = product ? buildProductUrl(product) : window.location.origin + canonicalPath;
   setMetaTag('property', 'og:title', document.title);
   setMetaTag('property', 'og:description', description);
   setMetaTag('property', 'og:image', image);
   setMetaTag('property', 'og:type', type);
-  setMetaTag('property', 'og:url', window.location.origin + canonicalPath);
+  setMetaTag('property', 'og:url', fullCanonicalUrl);
 
   // Canonical
   let canonicalLink = document.querySelector('link[rel="canonical"]');
@@ -51,7 +53,7 @@ export function updateSeoMetaData(props: SeoProps) {
     canonicalLink.setAttribute('rel', 'canonical');
     document.head.appendChild(canonicalLink);
   }
-  canonicalLink.setAttribute('href', window.location.origin + canonicalPath);
+  canonicalLink.setAttribute('href', fullCanonicalUrl);
 
   // JSON-LD Structured Data
   injectJsonLdSchema(product);
