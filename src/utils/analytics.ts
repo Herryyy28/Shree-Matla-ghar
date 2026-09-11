@@ -25,7 +25,8 @@ export type AnalyticsEvent =
   | 'search_query'
   | 'filter_applied'
   | 'favorites_viewed'
-  | 'qr_generated';
+  | 'qr_generated'
+  | 'tandoor_wizard_recommendation';
 
 export interface AnalyticsPayload {
   event: AnalyticsEvent;
@@ -37,30 +38,34 @@ export interface AnalyticsPayload {
 /**
  * Track a business analytics event.
  * Currently logs to console in development.
- * Replace the body with GA4 / Plausible calls when ready.
  */
+// Extend Window interface for gtag
+declare global {
+  interface Window {
+    gtag?: (...args: any[]) => void;
+    plausible?: (...args: any[]) => void;
+  }
+}
+
 export function trackEvent(payload: AnalyticsPayload): void {
   // Development logging
   if (import.meta.env.DEV) {
     console.info('[Analytics]', payload);
   }
 
-  // --- Production integration hook ---
-  // Uncomment and replace with your analytics provider:
-  //
-  // Google Analytics 4:
-  // if (typeof window.gtag === 'function') {
-  //   window.gtag('event', payload.event, {
-  //     event_category: payload.category,
-  //     event_label: payload.label,
-  //     value: payload.value,
-  //   });
-  // }
-  //
-  // Plausible:
-  // if (typeof window.plausible === 'function') {
-  //   window.plausible(payload.event, { props: payload });
-  // }
+  // Google Analytics 4 integration
+  if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+    window.gtag('event', payload.event, {
+      event_category: payload.category,
+      event_label: payload.label,
+      value: payload.value,
+    });
+  }
+
+  // Plausible Integration
+  if (typeof window !== 'undefined' && typeof window.plausible === 'function') {
+    window.plausible(payload.event, { props: payload });
+  }
 }
 
 /** Convenience: Track a page view */
@@ -99,4 +104,14 @@ export function trackBulkEnquiry(stage: 'start' | 'submit', product: string): vo
 /** Convenience: Track a search */
 export function trackSearch(query: string): void {
   trackEvent({ event: 'search_query', label: query });
+}
+
+/** Convenience: Track Tandoor Selector Wizard recommendation */
+export function trackTandoorWizardRecommendation(tandoorType: string, businessType: string): void {
+  trackEvent({
+    event: 'tandoor_wizard_recommendation',
+    category: 'tandoor',
+    label: tandoorType,
+    value: businessType,
+  });
 }

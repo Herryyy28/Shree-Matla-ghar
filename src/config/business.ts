@@ -1,7 +1,7 @@
 import { BusinessConfig } from '../types';
 
 export const BUSINESS_CONFIG: BusinessConfig = {
-  brandName: "Shree Matla Ghar",
+  brandName: "Shree Matla Dhar",
   listingName: "Shree Matla Ghar & Tandoor",
   brandTagline: "From Mitti to Memories.",
   phone: "+91 79844 58082",

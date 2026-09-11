@@ -204,12 +204,52 @@ export const ProductsPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Results Count Summary */}
-      <div className="flex items-center justify-between text-xs text-clay-600 font-medium px-1">
-        <span>Showing <strong>{filteredProducts.length}</strong> pottery products</span>
-        {selectedCategory !== 'all' && (
-          <span className="uppercase font-bold text-clay-500 text-[10px] sm:text-xs">Category: {selectedCategory}</span>
-        )}
+      {/* Active Filter Chips & Count Summary */}
+      <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-clay-600 font-medium px-1">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="font-serif font-bold text-sm text-clay-900">
+            {filteredProducts.length} Pottery Products
+          </span>
+
+          {selectedCategory !== 'all' && (
+            <button
+              onClick={() => handleCategorySelect('all')}
+              className="inline-flex items-center gap-1 bg-amber-100 text-amber-950 text-[11px] font-bold px-2.5 py-1 rounded-lg border border-amber-300/80 hover:bg-amber-200 transition-colors"
+            >
+              <span>Category: {selectedCategory}</span>
+              <span className="text-xs">×</span>
+            </button>
+          )}
+
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery('')}
+              className="inline-flex items-center gap-1 bg-amber-100 text-amber-950 text-[11px] font-bold px-2.5 py-1 rounded-lg border border-amber-300/80 hover:bg-amber-200 transition-colors"
+            >
+              <span>Search: "{searchQuery}"</span>
+              <span className="text-xs">×</span>
+            </button>
+          )}
+
+          {wholesaleOnly && (
+            <button
+              onClick={() => setWholesaleOnly(false)}
+              className="inline-flex items-center gap-1 bg-amber-100 text-amber-950 text-[11px] font-bold px-2.5 py-1 rounded-lg border border-amber-300/80 hover:bg-amber-200 transition-colors"
+            >
+              <span>Bulk Orders Only</span>
+              <span className="text-xs">×</span>
+            </button>
+          )}
+
+          {(selectedCategory !== 'all' || searchQuery || wholesaleOnly) && (
+            <button
+              onClick={handleResetFilters}
+              className="text-[11px] font-bold text-red-600 hover:text-red-700 underline ml-1"
+            >
+              Clear All Filters
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Products Grid */}

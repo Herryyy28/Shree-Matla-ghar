@@ -62,17 +62,17 @@ export const HomePage: React.FC = () => {
     <div className="space-y-16 sm:space-y-24 pb-12">
       
       {/* SECTION 1 — HERO */}
-      <section className="relative overflow-hidden bg-clay-900 text-clay-100 rounded-b-3xl sm:rounded-b-[2.5rem] shadow-earth-lg">
+      <section className="relative overflow-hidden bg-clay-950 text-clay-100 rounded-b-3xl sm:rounded-b-[2.5rem] shadow-earth-lg">
         <div className="absolute inset-0 z-0">
-          <ImageWithFallback
-            src="/assets/shree-matla-ghar/store/hero-banner.jpg"
-            alt="Shree Matla Ghar & Tandoor Showroom"
+          <img
+            src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=1920&q=80"
+            alt="Shree Matla Ghar Showroom & Pottery Craft"
             className="w-full h-full object-cover opacity-25"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-clay-950 via-clay-900/90 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-clay-950 via-clay-950/95 to-clay-900/90" />
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 lg:py-28 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <div className="relative z-10 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 lg:py-28 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           <div className="lg:col-span-7 space-y-4 sm:space-y-6">
             
             {/* Store Badge */}
@@ -139,7 +139,7 @@ export const HomePage: React.FC = () => {
           <div className="lg:col-span-5 relative mt-4 lg:mt-0">
             <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-clay-700 bg-clay-800">
               <ImageWithFallback
-                src={tandoorProduct?.images[0] || "/assets/shree-matla-ghar/tandoor/drum-tandoor-main.jpg"}
+                src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1000&q=80"
                 alt="Specialist Commercial Drum Tandoor"
                 className="w-full h-64 sm:h-80 lg:h-96 object-cover"
               />

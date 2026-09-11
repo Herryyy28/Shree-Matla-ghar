@@ -2,9 +2,6 @@ import { Product } from '../types';
 
 /**
  * PRODUCTS DATASET FOR SHREE MATLA GHAR (SHREE MATLA GHAR & TANDOOR, BHAVNAGAR)
- * 
- * STRICT RULE: All images point strictly to local business asset paths under /assets/shree-matla-ghar/.
- * No generic internet stock photos are used.
  */
 export const PRODUCTS: Product[] = [
   // TANDOOR SPECIALIST CATEGORY (VERIFIED GOOGLE MAPS LISTING HIGHLIGHTS)
@@ -16,8 +13,7 @@ export const PRODUCTS: Product[] = [
     shortDescription: "Specialist drum tandoor crafted with high-heat clay lining inside a heavy metal drum for restaurants, dhabas, and caterers.",
     description: "Shree Matla Ghar (Shree Matla Ghar & Tandoor) is a specialist supplier of heavy-duty Drum Tandoors in Bhavnagar. Built with thick refractory clay walls inside a solid steel drum casing, ensuring maximum heat retention for continuous naan baking and tikka roasting.",
     images: [
-      "/assets/shree-matla-ghar/tandoor/drum-tandoor-main.jpg",
-      "/assets/shree-matla-ghar/tandoor/drum-tandoor-inside.jpg",
+      "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80",
     ],
     priceLabel: "Price on Request",
     sizes: ["Standard Commercial Size", "Large Dhaba Size", "Custom Diameter"],
@@ -41,8 +37,7 @@ export const PRODUCTS: Product[] = [
     shortDescription: "Portable trolley tandoor mounted on smooth castor wheels for wedding caterers, outdoor events, and food trucks.",
     description: "Designed for effortless mobility, our Mobile Trolley Tandoor features a reinforced clay core inside a heavy-duty trolley frame with locking castor wheels. Perfect for live catering counters.",
     images: [
-      "/assets/shree-matla-ghar/tandoor/trolly-tandoor-main.jpg",
-      "/assets/shree-matla-ghar/tandoor/trolly-tandoor-wheels.jpg",
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80",
     ],
     priceLabel: "Price on Request",
     sizes: ["Medium Mobile", "Large Event Trolley"],
@@ -63,7 +58,7 @@ export const PRODUCTS: Product[] = [
     shortDescription: "Premium rust-free stainless steel outer body encasing a traditional earthen clay tandoor pot.",
     description: "Combines modern hygiene standards with traditional mitti taste. The SS outer body is rust-proof, easy to sanitize, and thermal-insulated.",
     images: [
-      "/assets/shree-matla-ghar/tandoor/ss-tandoor-main.jpg",
+      "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80",
     ],
     priceLabel: "Price on Request",
     sizes: ["26 inch SS Square", "30 inch SS Square", "Custom SS Finish"],
@@ -84,7 +79,7 @@ export const PRODUCTS: Product[] = [
     shortDescription: "Portable compact clay tandoor pot designed for family barbecues and weekend backyard cooking.",
     description: "Enjoy authentic smoked tandoori rotis and Paneer Tikka at home. Compact footprint fits comfortably in home balconies or garden patios.",
     images: [
-      "/assets/shree-matla-ghar/tandoor/home-tandoor-main.jpg",
+      "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80",
     ],
     priceLabel: "Price on Request",
     sizes: ["Small (12 inch inner)", "Medium (14 inch inner)"],
@@ -107,8 +102,7 @@ export const PRODUCTS: Product[] = [
     shortDescription: "Hand-shaped natural clay water pot fitted with an easy-use tap for naturally chilled alkaline drinking water.",
     description: "Crafted from natural Bhavnagar clay, this traditional Matka naturally cools drinking water through evaporative micro-pores while balancing pH levels.",
     images: [
-      "/assets/shree-matla-ghar/matka/deshi-matka-tap.jpg",
-      "/assets/shree-matla-ghar/matka/deshi-matka-top.jpg",
+      "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=800&q=80",
     ],
     priceLabel: "Price on Request / Contact Store",
     sizes: ["5 Litres", "8 Litres", "12 Litres", "15 Litres"],
@@ -134,7 +128,7 @@ export const PRODUCTS: Product[] = [
     shortDescription: "Elegant elongated-neck terracotta water pitcher designed for gentle natural water cooling.",
     description: "Inspired by traditional Indian heritage pottery, the long narrow neck restricts dust while allowing evaporative cooling.",
     images: [
-      "/assets/shree-matla-ghar/matka/surahi-main.jpg",
+      "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=800&q=80",
     ],
     priceLabel: "Price on Request",
     sizes: ["2 Litres", "3 Litres", "5 Litres"],
@@ -157,7 +151,7 @@ export const PRODUCTS: Product[] = [
     shortDescription: "Traditional eco-friendly unglazed clay tea cups that impart an authentic earthy aroma into hot tea and coffee.",
     description: "Every sip of masala chai tastes divine when served in an unglazed clay Kulhad. Fired at optimal temperatures for single-use catering or reusable home serving.",
     images: [
-      "/assets/shree-matla-ghar/kulhad/kulhad-set.jpg",
+      "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80",
     ],
     priceLabel: "Price on Request (Bulk Discount Available)",
     sizes: ["100 ml", "150 ml", "200 ml"],
@@ -180,7 +174,7 @@ export const PRODUCTS: Product[] = [
     shortDescription: "Thick-walled earthen cooking handi designed for slow dum cooking and rich dal makhani.",
     description: "Cook nutritious meals without losing moisture. Clay handis distribute heat evenly and seal in natural juices.",
     images: [
-      "/assets/shree-matla-ghar/handi/biryani-handi-main.jpg",
+      "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=800&q=80",
     ],
     priceLabel: "Price on Request",
     sizes: ["1 Litre", "2 Litres", "3.5 Litres", "5 Litres"],
@@ -207,7 +201,7 @@ export const PRODUCTS: Product[] = [
     shortDescription: "Breathable terracotta planter pot with drainage hole for healthier plant root aeration.",
     description: "Porous terracotta walls allow root respiration while regulating soil temperature under outdoor sunlight.",
     images: [
-      "/assets/shree-matla-ghar/planters/gamla-planter-main.jpg",
+      "https://images.unsplash.com/photo-1485955900006-10f4d324d411?auto=format&fit=crop&w=800&q=80",
     ],
     priceLabel: "Price on Request",
     sizes: ["8 inch", "10 inch", "12 inch", "16 inch"],
@@ -230,8 +224,7 @@ export const PRODUCTS: Product[] = [
     shortDescription: "Pure natural riverbed clay Lord Ganesha idol hand-painted with organic herbal colors.",
     description: "Celebrate Ganesh Chaturthi with devotion and environmental care. Made from 100% natural Shadu Mati without any Plaster of Paris (PoP). Dissolves completely in water during Visarjan.",
     images: [
-      "/assets/shree-matla-ghar/ganpati/shadu-ganpati-main.jpg",
-      "/assets/shree-matla-ghar/ganpati/shadu-ganpati-detail.jpg"
+      "https://images.unsplash.com/photo-1630327447475-430c5e7b233a?auto=format&fit=crop&w=800&q=80",
     ],
     priceLabel: "Price on Request / Advance Booking",
     sizes: ["Small (1 Foot)", "Medium (1.5 Feet)", "Large (2 Feet)", "Designer Custom"],
@@ -256,7 +249,7 @@ export const PRODUCTS: Product[] = [
     shortDescription: "Pure mitti oil lamps for Diwali celebrations, festive lighting, and daily temple puja.",
     description: "Traditional earthen oil lamps handcrafted from pure clay and fired for oil retention.",
     images: [
-      "/assets/shree-matla-ghar/diya/clay-diya-main.jpg",
+      "https://images.unsplash.com/photo-1605888907310-745a303666b6?auto=format&fit=crop&w=800&q=80",
     ],
     priceLabel: "Price on Request",
     sizes: ["Standard Pack of 12", "Bulk Event Pack"],

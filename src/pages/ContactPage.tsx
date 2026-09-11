@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { MapPin, Phone, Mail, Clock, MessageCircle, Navigation, Store } from 'lucide-react';
 import { BUSINESS_CONFIG } from '../config/business';
-import { getGeneralWhatsAppLink } from '../utils/whatsapp';
+import { getContactPageWhatsAppLink } from '../utils/whatsapp';
 import { ContactForm } from '../components/forms/ContactForm';
 import { updateSeoMetaData } from '../utils/seo';
 
@@ -82,7 +82,7 @@ export const ContactPage: React.FC = () => {
                 <span>Open in Google Maps</span>
               </a>
               <a
-                href={getGeneralWhatsAppLink()}
+                href={getContactPageWhatsAppLink()}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1 py-3 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition-colors min-h-[44px]"

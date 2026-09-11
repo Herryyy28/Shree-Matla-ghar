@@ -20,6 +20,9 @@ import { ShippingPage } from './pages/ShippingPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { FavoritesPage } from './pages/FavoritesPage';
 
+import { EnquiryProvider } from './context/EnquiryContext';
+import { MultiEnquiryDrawer } from './components/enquiry/MultiEnquiryDrawer';
+
 // Scroll to top on route change
 const ScrollToTop: React.FC = () => {
   const { pathname } = useLocation();
@@ -34,37 +37,40 @@ const ScrollToTop: React.FC = () => {
 export const App: React.FC = () => {
   return (
     <ToastProvider>
-      <Router>
-        <ScrollToTop />
-        <div className="flex flex-col min-h-screen">
-          <Header />
-          <main className="flex-grow">
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/products" element={<ProductsPage />} />
-              <Route path="/products/tandoor" element={<TandoorPage />} />
-              <Route path="/products/matka" element={<ProductsPage />} />
-              <Route path="/products/kulhad" element={<ProductsPage />} />
-              <Route path="/products/handi" element={<ProductsPage />} />
-              <Route path="/products/planters" element={<ProductsPage />} />
-              <Route path="/product/:slug" element={<ProductDetailPage />} />
-              <Route path="/tandoor" element={<TandoorPage />} />
-              <Route path="/ganpati" element={<GanpatiPage />} />
-              <Route path="/wholesale" element={<WholesalePage />} />
-              <Route path="/gallery" element={<GalleryPage />} />
-              <Route path="/our-story" element={<OurStoryPage />} />
-              <Route path="/contact" element={<ContactPage />} />
-              <Route path="/privacy" element={<PrivacyPage />} />
-              <Route path="/terms" element={<TermsPage />} />
-              <Route path="/shipping" element={<ShippingPage />} />
-              <Route path="/saved" element={<FavoritesPage />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
-          </main>
-          <Footer />
-          <MobileBottomBar />
-        </div>
-      </Router>
+      <EnquiryProvider>
+        <Router>
+          <ScrollToTop />
+          <div className="flex flex-col min-h-screen">
+            <Header />
+            <main className="flex-grow">
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/products" element={<ProductsPage />} />
+                <Route path="/pottery" element={<ProductsPage />} />
+                <Route path="/search" element={<ProductsPage />} />
+                <Route path="/pottery/tandoor" element={<TandoorPage />} />
+                <Route path="/products/tandoor" element={<TandoorPage />} />
+                <Route path="/pottery/:slug" element={<ProductDetailPage />} />
+                <Route path="/product/:slug" element={<ProductDetailPage />} />
+                <Route path="/tandoor" element={<TandoorPage />} />
+                <Route path="/ganpati" element={<GanpatiPage />} />
+                <Route path="/wholesale" element={<WholesalePage />} />
+                <Route path="/gallery" element={<GalleryPage />} />
+                <Route path="/our-story" element={<OurStoryPage />} />
+                <Route path="/contact" element={<ContactPage />} />
+                <Route path="/privacy" element={<PrivacyPage />} />
+                <Route path="/terms" element={<TermsPage />} />
+                <Route path="/shipping" element={<ShippingPage />} />
+                <Route path="/saved" element={<FavoritesPage />} />
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+            </main>
+            <Footer />
+            <MobileBottomBar />
+            <MultiEnquiryDrawer />
+          </div>
+        </Router>
+      </EnquiryProvider>
     </ToastProvider>
   );
 };

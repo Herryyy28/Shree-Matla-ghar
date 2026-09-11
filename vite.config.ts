@@ -13,5 +13,19 @@ export default defineConfig({
   server: {
     port: 3000,
     open: true,
+    host: true,
+  },
+  build: {
+    target: 'es2020',
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+          icons: ['lucide-react'],
+        },
+      },
+    },
   },
 });
+

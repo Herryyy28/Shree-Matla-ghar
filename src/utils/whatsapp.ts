@@ -2,136 +2,234 @@ import { BUSINESS_CONFIG } from '../config/business';
 
 export interface WhatsAppProductOptions {
   productName: string;
+  category?: string;
   size?: string;
   priceLabel?: string;
   customNote?: string;
 }
 
-export interface WhatsAppWholesaleOptions {
-  name: string;
-  businessName: string;
-  product: string;
-  quantity: string;
-  location: string;
-  message?: string;
-}
-
 export interface WhatsAppTandoorOptions {
   tandoorType: string;
   sizeOrCapacity?: string;
-  usageType?: string; // Restaurant / Home / Catering
+  usageType?: string;
+  customNote?: string;
 }
 
 export interface WhatsAppGanpatiOptions {
   idolName: string;
-  size: string;
-  deliveryOrPickup?: string;
+  size?: string;
+  customNote?: string;
+}
+
+export interface WhatsAppWholesaleOptions {
+  name?: string;
+  businessName?: string;
+  product: string;
+  quantity: string;
+  location?: string;
+  message?: string;
+}
+
+export interface MultiEnquiryItem {
+  name: string;
+  quantity?: number;
+  category?: string;
+  size?: string;
+}
+
+export interface MultiEnquiryOptions {
+  items: MultiEnquiryItem[];
+  customerName?: string;
+  location?: string;
+  note?: string;
 }
 
 /**
  * Encodes text into a WhatsApp direct wa.me link with the central business phone number
  */
 export function buildWhatsAppLink(message: string): string {
-  const encoded = encodeURIComponent(message.trim());
+  const sanitized = message.trim();
+  const encoded = encodeURIComponent(sanitized);
   return `https://wa.me/${BUSINESS_CONFIG.whatsappNumber}?text=${encoded}`;
 }
 
 /**
- * Builds a WhatsApp enquiry message for a specific retail product
+ * Product Enquiry Message Builder (Section 4)
  */
 export function getProductWhatsAppLink(options: WhatsAppProductOptions): string {
-  const { productName, size, priceLabel, customNote } = options;
+  const { productName, category, size, customNote } = options;
   
-  let msg = `Hello ${BUSINESS_CONFIG.brandName} (${BUSINESS_CONFIG.listingName})! 🏺\n\n`;
-  msg += `I am interested in your *${productName}*`;
-  
+  let msg = `Hello ${BUSINESS_CONFIG.brandName},\n\n`;
+  msg += `I am interested in the following pottery product:\n\n`;
+  msg += `Product: ${productName}\n`;
+  if (category) {
+    msg += `Category: ${category}\n`;
+  }
   if (size) {
-    msg += ` (Size/Variant: ${size})`;
+    msg += `Size: ${size}\n`;
   }
   
-  if (priceLabel) {
-    msg += ` - Listed Info: ${priceLabel}`;
+  msg += `\nPlease share the price, available options and availability.\n`;
+
+  if (customNote && customNote.trim()) {
+    msg += `\nAdditional Requirement:\n${customNote.trim()}\n`;
   }
-  
-  msg += `.\n\nPlease share the available stock, pricing, and store pickup or delivery details in ${BUSINESS_CONFIG.city}.`;
-  
-  if (customNote) {
-    msg += `\n\nNote: ${customNote}`;
-  }
+
+  msg += `\nThank you.`;
 
   return buildWhatsAppLink(msg);
 }
 
 /**
- * Builds a WhatsApp quote request for Tandoor products (Drum Tandoor, Trolly Tandoor, SS Tandoor)
+ * Tandoor Enquiry Message Builder (Section 5)
  */
 export function getTandoorWhatsAppLink(options: WhatsAppTandoorOptions): string {
-  const { tandoorType, sizeOrCapacity, usageType } = options;
+  const { tandoorType, sizeOrCapacity, customNote } = options;
   
-  let msg = `Hello ${BUSINESS_CONFIG.brandName}! 🔥 *TANDOOR ENQUIRY*\n\n`;
-  msg += `I want to enquire about your *${tandoorType}*`;
-  
-  if (usageType) {
-    msg += ` for *${usageType}* use`;
-  }
-  
+  let msg = `Hello ${BUSINESS_CONFIG.brandName},\n\n`;
+  msg += `I am interested in:\n\n`;
+  msg += `Product: ${tandoorType}\n`;
   if (sizeOrCapacity) {
-    msg += ` (Size: ${sizeOrCapacity})`;
+    msg += `Size/Options: ${sizeOrCapacity}\n`;
   }
   
-  msg += `.\n\nPlease share high-res photos, specs, price quote, and availability at your Bhavnagar showroom.`;
+  msg += `\nPlease share the available size/options, price and availability.\n`;
+
+  if (customNote && customNote.trim()) {
+    msg += `\nAdditional Requirement:\n${customNote.trim()}\n`;
+  }
+
+  msg += `\nThank you.`;
 
   return buildWhatsAppLink(msg);
 }
 
 /**
- * Builds a WhatsApp wholesale bulk order enquiry message
+ * Ganpati Enquiry Message Builder (Section 6)
+ */
+export function getGanpatiWhatsAppLink(options: WhatsAppGanpatiOptions): string {
+  const { idolName, size, customNote } = options;
+  
+  let msg = `Hello ${BUSINESS_CONFIG.brandName},\n\n`;
+  msg += `I am interested in:\n\n`;
+  msg += `Ganpati: ${idolName}\n`;
+  if (size) {
+    msg += `Size: ${size}\n`;
+  }
+  
+  msg += `\nPlease share the available size, price and availability.\n`;
+
+  if (customNote && customNote.trim()) {
+    msg += `\nAdditional Requirement:\n${customNote.trim()}\n`;
+  }
+
+  msg += `\nThank you.`;
+
+  return buildWhatsAppLink(msg);
+}
+
+/**
+ * Bulk / Wholesale Enquiry Message Builder (Section 7)
  */
 export function getWholesaleWhatsAppLink(options: WhatsAppWholesaleOptions): string {
   const { name, businessName, product, quantity, location, message } = options;
   
-  let msg = `Hello ${BUSINESS_CONFIG.brandName}! 📦 *WHOLESALE BULK ENQUIRY*\n\n`;
-  msg += `• *Contact Name:* ${name}\n`;
-  msg += `• *Business / Establishment:* ${businessName}\n`;
-  msg += `• *Product Required:* ${product}\n`;
-  msg += `• *Estimated Quantity:* ${quantity}\n`;
-  msg += `• *Delivery Location:* ${location}\n`;
-  
-  if (message) {
-    msg += `• *Additional Notes:* ${message}\n`;
+  let msg = `Hello ${BUSINESS_CONFIG.brandName},\n\n`;
+  msg += `I would like to enquire about a bulk pottery order.\n\n`;
+  msg += `Product: ${product}\n`;
+  msg += `Quantity: ${quantity}\n`;
+  if (name || businessName) {
+    msg += `Business/Name: ${name || businessName}\n`;
   }
-  
-  msg += `\nPlease share your wholesale pricing catalog and bulk dispatch details. Thank you!`;
+  if (location) {
+    msg += `Location: ${location}\n`;
+  }
+
+  if (message && message.trim()) {
+    msg += `\nAdditional Requirement:\n${message.trim()}\n`;
+  }
+
+  msg += `\nPlease share the quotation and availability.\n\nThank you.`;
 
   return buildWhatsAppLink(msg);
 }
 
 /**
- * Builds a WhatsApp booking message for seasonal Ganpati idols
+ * Multi-Product Enquiry Message Builder (Section 8)
  */
-export function getGanpatiWhatsAppLink(options: WhatsAppGanpatiOptions): string {
-  const { idolName, size, deliveryOrPickup } = options;
-  
-  let msg = `Hello ${BUSINESS_CONFIG.brandName}! 🙏 *GANPATI IDOL ENQUIRY*\n\n`;
-  msg += `I am interested in booking the *${idolName}* (100% Eco-Friendly Shadu Mati Clay).\n`;
-  msg += `• *Idol Size:* ${size}\n`;
-  if (deliveryOrPickup) {
-    msg += `• *Preference:* ${deliveryOrPickup}\n`;
+export function getMultiProductWhatsAppLink(options: MultiEnquiryOptions): string {
+  const { items, customerName, location, note } = options;
+
+  if (!items || items.length === 0) {
+    return getGeneralWhatsAppLink();
   }
-  msg += `\nPlease share available designs, prices, and store pickup details in Bhavnagar. Dhanyawad!`;
 
-  return buildWhatsAppLink(msg);
-}
+  const hasQuantities = items.some((item) => item.quantity && item.quantity > 1);
 
-/**
- * General WhatsApp enquiry message
- */
-export function getGeneralWhatsAppLink(customSubject?: string): string {
-  let msg = `Hello ${BUSINESS_CONFIG.brandName} (${BUSINESS_CONFIG.listingName})! 👋\n\n`;
-  if (customSubject) {
-    msg += `I would like to enquire about ${customSubject}.`;
+  let msg = `Hello ${BUSINESS_CONFIG.brandName},\n\n`;
+
+  if (hasQuantities) {
+    msg += `I would like to enquire about the following pottery products:\n\n`;
+    items.forEach((item, idx) => {
+      msg += `${idx + 1}. ${item.name} - Quantity: ${item.quantity || 1}\n`;
+    });
+    msg += `\nPlease share the price and availability.\n`;
   } else {
-    msg += `I visited your website and would like to enquire about your clay products and tandoors in Bhavnagar.`;
+    msg += `I am interested in the following pottery products:\n\n`;
+    items.forEach((item, idx) => {
+      msg += `${idx + 1}. ${item.name}\n`;
+    });
+    msg += `\nPlease share the price and availability for these products.\n`;
   }
+
+  if (customerName || location) {
+    msg += `\nCustomer Details:`;
+    if (customerName) msg += `\nName: ${customerName}`;
+    if (location) msg += `\nLocation: ${location}`;
+    msg += `\n`;
+  }
+
+  if (note && note.trim()) {
+    msg += `\nAdditional Requirement:\n${note.trim()}\n`;
+  }
+
+  msg += `\nThank you.`;
+
+  return buildWhatsAppLink(msg);
+}
+
+/**
+ * Category-Level Enquiry Message Builder (Section 11)
+ */
+export function getCategoryWhatsAppLink(categoryName: string): string {
+  let msg = `Hello ${BUSINESS_CONFIG.brandName},\n\n`;
+  msg += `I am interested in your ${categoryName} collection.\n\n`;
+  msg += `Please share the available products, prices and details.\n\n`;
+  msg += `Thank you.`;
+
+  return buildWhatsAppLink(msg);
+}
+
+/**
+ * Contact Page WhatsApp Message Builder (Section 10)
+ */
+export function getContactPageWhatsAppLink(): string {
+  let msg = `Hello ${BUSINESS_CONFIG.brandName},\n\n`;
+  msg += `I would like to enquire about your pottery products.\n\n`;
+  msg += `Please guide me with the available products and details.\n\n`;
+  msg += `Thank you.`;
+
+  return buildWhatsAppLink(msg);
+}
+
+/**
+ * General Business Enquiry Message Builder (Section 9)
+ */
+export function getGeneralWhatsAppLink(): string {
+  let msg = `Hello ${BUSINESS_CONFIG.brandName},\n\n`;
+  msg += `I would like to know more about your pottery products.\n\n`;
+  msg += `Please share the available products, prices and details.\n\n`;
+  msg += `Thank you.`;
+
   return buildWhatsAppLink(msg);
 }

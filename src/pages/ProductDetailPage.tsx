@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { MessageCircle, Share2, ArrowLeft, Check, Info } from 'lucide-react';
+import { MessageCircle, Share2, ArrowLeft, Check, Info, Package, Plus, Phone, MapPin, Sparkles, ShieldCheck, Truck } from 'lucide-react';
 import { PRODUCTS } from '../data/products';
 import { getProductWhatsAppLink } from '../utils/whatsapp';
 import { updateSeoMetaData } from '../utils/seo';
 import { ProductCard } from '../components/product/ProductCard';
 import { ShareModal } from '../components/product/ShareModal';
 import { BUSINESS_CONFIG } from '../config/business';
-import { ImageWithFallback } from '../components/common/ImageWithFallback';
+import { useEnquiry } from '../context/EnquiryContext';
 import { FavoriteButton } from '../components/common/FavoriteButton';
 import { BulkEnquiryDrawer } from '../components/common/BulkEnquiryDrawer';
 import { trackProductView } from '../utils/analytics';
+import { ImageWithFallback } from '../components/common/ImageWithFallback';
 
 export const ProductDetailPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -23,6 +24,7 @@ export const ProductDetailPage: React.FC = () => {
   const [isShareOpen, setIsShareOpen] = useState(false);
   const [isBulkOpen, setIsBulkOpen] = useState(false);
   const [customNote, setCustomNote] = useState('');
+  const { addToEnquiry, isInEnquiry } = useEnquiry();
 
   useEffect(() => {
     if (product) {
@@ -58,8 +60,8 @@ export const ProductDetailPage: React.FC = () => {
 
   const whatsappUrl = getProductWhatsAppLink({
     productName: product.name,
+    category: product.category,
     size: selectedSize,
-    priceLabel: product.priceLabel,
     customNote: customNote.trim() || undefined,
   });
 
@@ -70,14 +72,26 @@ export const ProductDetailPage: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-8 pb-28 sm:pb-20">
       
-      {/* Back Button */}
-      <div>
+      {/* Navigation Breadcrumbs & Back Button */}
+      <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-clay-600 font-medium">
+        <nav className="flex items-center gap-1.5 flex-wrap truncate text-[11px] sm:text-xs">
+          <Link to="/" className="hover:text-clay-900 transition-colors">Home</Link>
+          <span>/</span>
+          <Link to="/pottery" className="hover:text-clay-900 transition-colors">Pottery</Link>
+          <span>/</span>
+          <Link to={`/pottery?category=${product.category}`} className="hover:text-clay-900 capitalize transition-colors">
+            {product.category}
+          </Link>
+          <span>/</span>
+          <span className="font-bold text-clay-900 truncate max-w-[150px] sm:max-w-none">{product.name}</span>
+        </nav>
+
         <button
           onClick={() => navigate(-1)}
           className="inline-flex items-center gap-1.5 text-xs font-bold text-clay-700 hover:text-clay-900 bg-white border border-clay-200 px-3.5 py-2.5 rounded-xl transition-colors min-h-[44px]"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Back to Catalog</span>
+          <span>Back</span>
         </button>
       </div>
 
@@ -199,25 +213,88 @@ export const ProductDetailPage: React.FC = () => {
 
           {/* Core Conversion CTAs */}
           <div className="space-y-3 pt-2">
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full py-3.5 sm:py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs sm:text-sm rounded-2xl shadow-earth transition-all duration-300 flex items-center justify-center gap-2 hover:scale-[1.01] min-h-[48px]"
-            >
-              <MessageCircle className="w-5 h-5 shrink-0" />
-              <span>Enquire & Order on WhatsApp</span>
-            </a>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <button
+                onClick={() => product && addToEnquiry(product)}
+                className={`py-3.5 sm:py-4 font-bold text-xs sm:text-sm rounded-2xl border transition-all flex items-center justify-center gap-2 min-h-[48px] ${
+                  product && isInEnquiry(product.id)
+                    ? 'bg-amber-500 text-clay-950 border-amber-500 shadow-md'
+                    : 'bg-amber-100 hover:bg-amber-200 text-amber-950 border-amber-300'
+                }`}
+              >
+                {product && isInEnquiry(product.id) ? (
+                  <>
+                    <Check className="w-5 h-5 shrink-0" />
+                    <span>Added to Enquiry List</span>
+                  </>
+                ) : (
+                  <>
+                    <Plus className="w-5 h-5 shrink-0 text-amber-900" />
+                    <span>Add to Multi-Product Enquiry</span>
+                  </>
+                )}
+              </button>
+
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="py-3.5 sm:py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs sm:text-sm rounded-2xl shadow-earth transition-all duration-300 flex items-center justify-center gap-2 hover:scale-[1.01] min-h-[48px]"
+              >
+                <MessageCircle className="w-5 h-5 shrink-0" />
+                <span>Instant WhatsApp Quote</span>
+              </a>
+            </div>
+
+            {/* Direct Phone & Store Map CTA buttons */}
+            <div className="grid grid-cols-2 gap-2.5 pt-1">
+              <a
+                href={`tel:${BUSINESS_CONFIG.phone}`}
+                className="py-2.5 px-3 bg-clay-100 hover:bg-clay-200 text-clay-900 font-bold text-xs rounded-xl border border-clay-300 transition-colors flex items-center justify-center gap-1.5 min-h-[40px]"
+              >
+                <Phone className="w-3.5 h-3.5 text-clay-700" />
+                <span>Call Store</span>
+              </a>
+              <a
+                href={BUSINESS_CONFIG.googleMapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="py-2.5 px-3 bg-clay-100 hover:bg-clay-200 text-clay-900 font-bold text-xs rounded-xl border border-clay-300 transition-colors flex items-center justify-center gap-1.5 min-h-[40px]"
+              >
+                <MapPin className="w-3.5 h-3.5 text-clay-700" />
+                <span>Store Location</span>
+              </a>
+            </div>
 
             {product.wholesaleAvailable && (
               <button
                 onClick={() => setIsBulkOpen(true)}
-                className="w-full py-3 sm:py-3.5 bg-clay-100 hover:bg-clay-200 text-clay-900 font-bold text-xs rounded-2xl border border-clay-300 transition-colors flex items-center justify-center gap-2 min-h-[44px]"
+                className="w-full py-3 sm:py-3.5 bg-amber-50 hover:bg-amber-100 text-amber-950 font-bold text-xs rounded-2xl border border-amber-200 transition-colors flex items-center justify-center gap-2 min-h-[44px]"
               >
+                <Package className="w-4 h-4 text-amber-800" />
                 <span>Looking for Wholesale Bulk Supply? →</span>
               </button>
             )}
           </div>
+
+          {/* Recommended Use Cases */}
+          {product.useCases && product.useCases.length > 0 && (
+            <div className="bg-clay-50/80 rounded-2xl p-4 sm:p-5 border border-clay-200 space-y-2.5">
+              <h4 className="font-serif font-bold text-xs sm:text-sm text-clay-900 flex items-center gap-1.5">
+                <Sparkles className="w-4 h-4 text-amber-600 shrink-0" /> Recommended Applications & Uses
+              </h4>
+              <div className="flex flex-wrap gap-2">
+                {product.useCases.map((useCase, idx) => (
+                  <span
+                    key={idx}
+                    className="bg-white text-clay-800 text-xs font-semibold px-3 py-1.5 rounded-lg border border-clay-200 shadow-2xs"
+                  >
+                    ✨ {useCase}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Technical Specifications */}
           <div className="bg-white rounded-2xl p-4 sm:p-5 border border-clay-200 space-y-3">
@@ -243,6 +320,14 @@ export const ProductDetailPage: React.FC = () => {
                 <span className="text-clay-500 block">Store Location</span>
                 <strong className="text-clay-900">{BUSINESS_CONFIG.city}, Gujarat</strong>
               </div>
+              <div>
+                <span className="text-clay-500 block">Category</span>
+                <strong className="text-clay-900 capitalize">{product.category}</strong>
+              </div>
+              <div>
+                <span className="text-clay-500 block">Supply Type</span>
+                <strong className="text-clay-900">{product.wholesaleAvailable ? 'Retail & Bulk Wholesale' : 'Store Retail'}</strong>
+              </div>
             </div>
           </div>
 
@@ -259,6 +344,22 @@ export const ProductDetailPage: React.FC = () => {
               </ul>
             </div>
           )}
+
+          {/* Store Assurance Trust Badges */}
+          <div className="grid grid-cols-3 gap-2 pt-2 text-center border-t border-clay-200">
+            <div className="p-2 space-y-1">
+              <ShieldCheck className="w-5 h-5 text-emerald-600 mx-auto" />
+              <span className="text-[10px] sm:text-xs font-bold text-clay-800 block">100% Natural Clay</span>
+            </div>
+            <div className="p-2 space-y-1">
+              <Sparkles className="w-5 h-5 text-amber-600 mx-auto" />
+              <span className="text-[10px] sm:text-xs font-bold text-clay-800 block">Artisan Handmade</span>
+            </div>
+            <div className="p-2 space-y-1">
+              <Truck className="w-5 h-5 text-clay-600 mx-auto" />
+              <span className="text-[10px] sm:text-xs font-bold text-clay-800 block">Subhashnagar Store</span>
+            </div>
+          </div>
 
         </div>
       </div>

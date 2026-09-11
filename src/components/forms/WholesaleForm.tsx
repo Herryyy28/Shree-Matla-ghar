@@ -111,8 +111,9 @@ export const WholesaleForm: React.FC = () => {
               </label>
               <input
                 type="text"
+                maxLength={60}
                 value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value.slice(0, 60) })}
                 placeholder="e.g. Rajesh Kumar"
                 className={`w-full px-4 py-3 rounded-xl border text-sm text-clay-900 focus:outline-none focus:ring-2 focus:ring-clay-500 ${
                   errors.name ? 'border-red-500 bg-red-50/50' : 'border-clay-300 bg-clay-50/50'
@@ -128,8 +129,9 @@ export const WholesaleForm: React.FC = () => {
               </label>
               <input
                 type="text"
+                maxLength={80}
                 value={formData.businessName}
-                onChange={(e) => setFormData({ ...formData, businessName: e.target.value })}
+                onChange={(e) => setFormData({ ...formData, businessName: e.target.value.slice(0, 80) })}
                 placeholder="e.g. Royal Dhaba & Cafe"
                 className={`w-full px-4 py-3 rounded-xl border text-sm text-clay-900 focus:outline-none focus:ring-2 focus:ring-clay-500 ${
                   errors.businessName ? 'border-red-500 bg-red-50/50' : 'border-clay-300 bg-clay-50/50'
@@ -147,8 +149,9 @@ export const WholesaleForm: React.FC = () => {
               </label>
               <input
                 type="tel"
+                maxLength={20}
                 value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value, whatsapp: e.target.value })}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value.slice(0, 20), whatsapp: e.target.value.slice(0, 20) })}
                 placeholder="e.g. 9876543210"
                 className={`w-full px-4 py-3 rounded-xl border text-sm text-clay-900 focus:outline-none focus:ring-2 focus:ring-clay-500 ${
                   errors.phone ? 'border-red-500 bg-red-50/50' : 'border-clay-300 bg-clay-50/50'
@@ -164,8 +167,9 @@ export const WholesaleForm: React.FC = () => {
               </label>
               <input
                 type="text"
+                maxLength={60}
                 value={formData.location}
-                onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                onChange={(e) => setFormData({ ...formData, location: e.target.value.slice(0, 60) })}
                 placeholder="e.g. Mumbai, Pune, Delhi"
                 className={`w-full px-4 py-3 rounded-xl border text-sm text-clay-900 focus:outline-none focus:ring-2 focus:ring-clay-500 ${
                   errors.location ? 'border-red-500 bg-red-50/50' : 'border-clay-300 bg-clay-50/50'
@@ -202,8 +206,9 @@ export const WholesaleForm: React.FC = () => {
               </label>
               <input
                 type="text"
+                maxLength={50}
                 value={formData.quantity}
-                onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
+                onChange={(e) => setFormData({ ...formData, quantity: e.target.value.slice(0, 50) })}
                 placeholder="e.g. 100 Kulhads, 20 Handis"
                 className="w-full px-4 py-3 rounded-xl border border-clay-300 bg-clay-50/50 text-sm text-clay-900 focus:outline-none focus:ring-2 focus:ring-clay-500"
               />
@@ -217,10 +222,11 @@ export const WholesaleForm: React.FC = () => {
             </label>
             <textarea
               rows={3}
+              maxLength={300}
               value={formData.message}
-              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-              placeholder="Tell us about your target date, custom branding requirements, or packaging needs..."
-              className="w-full px-4 py-3 rounded-xl border border-clay-300 bg-clay-50/50 text-sm text-clay-900 focus:outline-none focus:ring-2 focus:ring-clay-500"
+              onChange={(e) => setFormData({ ...formData, message: e.target.value.slice(0, 300) })}
+              placeholder="Tell us about your target date, custom branding requirements, or packaging needs... (max 300 chars)"
+              className="w-full px-4 py-3 rounded-xl border border-clay-300 bg-clay-50/50 text-sm text-clay-900 focus:outline-none focus:ring-2 focus:ring-clay-500 resize-none"
             />
           </div>
 

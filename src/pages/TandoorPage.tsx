@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import { Flame, MessageCircle, ShieldCheck, Truck, Sparkles, Building2, Utensils, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Flame, MessageCircle } from 'lucide-react';
 import { PRODUCTS } from '../data/products';
 import { ProductCard } from '../components/product/ProductCard';
-import { getTandoorWhatsAppLink, getGeneralWhatsAppLink } from '../utils/whatsapp';
+import { getTandoorWhatsAppLink } from '../utils/whatsapp';
 import { updateSeoMetaData } from '../utils/seo';
 import { BUSINESS_CONFIG } from '../config/business';
 import { Link } from 'react-router-dom';
+import { TandoorWizard } from '../components/tandoor/TandoorWizard';
 
 export const TandoorPage: React.FC = () => {
   useEffect(() => {
@@ -48,7 +49,7 @@ export const TandoorPage: React.FC = () => {
 
       {/* Hero Banner */}
       <section className="bg-clay-900 text-white rounded-b-3xl sm:rounded-b-[2.5rem] py-12 sm:py-20 shadow-earth-lg relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-7 space-y-4 sm:space-y-6">
             <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[10px] sm:text-xs font-extrabold uppercase tracking-wider max-w-full">
               <Flame className="w-3.5 h-3.5 shrink-0" />
@@ -92,6 +93,11 @@ export const TandoorPage: React.FC = () => {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* Interactive Tandoor Selector Wizard */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <TandoorWizard />
       </section>
 
       {/* Featured Tandoor Specialist Categories */}

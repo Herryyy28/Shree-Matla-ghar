@@ -7,7 +7,7 @@ export const CATEGORIES: Category[] = [
     name: "Tandoor Collection",
     description: "Specialist in Drum Tandoor, Trolly Tandoor, SS Tandoor, and authentic Clay Tandoors for homes, cafes & restaurants.",
     icon: "🔥",
-    image: "/assets/shree-matla-ghar/tandoor/tandoor-category.jpg",
+    image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80",
     itemCount: 8,
   },
   {
@@ -16,7 +16,7 @@ export const CATEGORIES: Category[] = [
     name: "Matka & Water Pots",
     description: "Traditional natural clay matkas, matkis, tap matkas, and elegant narrow-neck surahis for naturally chilled drinking water.",
     icon: "🏺",
-    image: "/assets/shree-matla-ghar/matka/matka-category.jpg",
+    image: "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=800&q=80",
     itemCount: 9,
   },
   {
@@ -25,7 +25,7 @@ export const CATEGORIES: Category[] = [
     name: "Traditional Serveware & Kulhad",
     description: "Handcrafted clay chai kulhads, clay cups, glasses, plates, and bowls that infuse an earthy aroma into every serving.",
     icon: "☕",
-    image: "/assets/shree-matla-ghar/kulhad/kulhad-category.jpg",
+    image: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80",
     itemCount: 6,
   },
   {
@@ -34,7 +34,7 @@ export const CATEGORIES: Category[] = [
     name: "Handi & Cookware",
     description: "Heavy-bottomed unglazed clay handis and cooking pots for slow-cooked biryanis, dal makhani, and thick curd setting.",
     icon: "🍲",
-    image: "/assets/shree-matla-ghar/handi/handi-category.jpg",
+    image: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=800&q=80",
     itemCount: 5,
   },
   {
@@ -43,7 +43,7 @@ export const CATEGORIES: Category[] = [
     name: "Garden & Home Planters",
     description: "Porous terracotta gamla pots, decorative garden planters, hanging pots, and bird feeders for healthy plant roots.",
     icon: "🌱",
-    image: "/assets/shree-matla-ghar/planters/planters-category.jpg",
+    image: "https://images.unsplash.com/photo-1485955900006-10f4d324d411?auto=format&fit=crop&w=800&q=80",
     itemCount: 7,
   },
   {
@@ -52,7 +52,7 @@ export const CATEGORIES: Category[] = [
     name: "Festival & Puja Items",
     description: "Pure mitti handcrafted oil lamps, decorative Diwali diyas, incense holders, and sacred puja items.",
     icon: "🪔",
-    image: "/assets/shree-matla-ghar/diya/diya-category.jpg",
+    image: "https://images.unsplash.com/photo-1605888907310-745a303666b6?auto=format&fit=crop&w=800&q=80",
     itemCount: 6,
   },
   {
@@ -61,7 +61,7 @@ export const CATEGORIES: Category[] = [
     name: "Eco Ganpati Idols",
     description: "100% Eco-friendly Shadu Mati Lord Ganesha idols in Small, Medium, Large, and Designer custom variants.",
     icon: "🙏",
-    image: "/assets/shree-matla-ghar/ganpati/ganpati-category.jpg",
+    image: "https://images.unsplash.com/photo-1630327447475-430c5e7b233a?auto=format&fit=crop&w=800&q=80",
     itemCount: 5,
   },
   {
@@ -70,7 +70,7 @@ export const CATEGORIES: Category[] = [
     name: "Other Mitti Products",
     description: "Hand-painted terracotta vases, wind chimes, wall hangings, and custom handcrafted clay artwork.",
     icon: "✨",
-    image: "/assets/shree-matla-ghar/store/decorative-category.jpg",
+    image: "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?auto=format&fit=crop&w=800&q=80",
     itemCount: 4,
   },
 ];

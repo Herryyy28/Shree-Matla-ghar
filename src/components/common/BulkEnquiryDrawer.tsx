@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, MessageCircle, Package, AlertCircle, Send } from 'lucide-react';
+import { X, MessageCircle, Package, AlertCircle } from 'lucide-react';
 import { getWholesaleWhatsAppLink } from '../../utils/whatsapp';
 import { useToast } from './Toast';
 import { trackBulkEnquiry } from '../../utils/analytics';

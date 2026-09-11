@@ -5,15 +5,21 @@
  * NO account required. Works instantly in browser.
  */
 
+import { PRODUCTS } from '../data/products';
+
 const STORAGE_KEY = 'smg_saved_products';
 
-/** Get all saved product IDs from localStorage */
+/** Get all saved product IDs from localStorage, validated against active catalog */
 export function getSavedProductIds(): string[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [];
+    if (!Array.isArray(parsed)) return [];
+    
+    // Validate that saved IDs actually exist in the current product catalog
+    const validProductIds = new Set(PRODUCTS.map((p) => p.id));
+    return parsed.filter((id): id is string => typeof id === 'string' && validProductIds.has(id));
   } catch {
     return [];
   }

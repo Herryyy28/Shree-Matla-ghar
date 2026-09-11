@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MessageCircle, Share2, Eye, Tag, Package } from 'lucide-react';
+import { MessageCircle, Share2, Eye, Tag, Package, Check, Plus } from 'lucide-react';
 import { Product } from '../../types';
 import { getProductWhatsAppLink } from '../../utils/whatsapp';
 import { ShareModal } from './ShareModal';
 import { ImageWithFallback } from '../common/ImageWithFallback';
 import { FavoriteButton } from '../common/FavoriteButton';
 import { BulkEnquiryDrawer } from '../common/BulkEnquiryDrawer';
+import { useEnquiry } from '../../context/EnquiryContext';
 
 interface ProductCardProps {
   product: Product;
@@ -15,9 +16,13 @@ interface ProductCardProps {
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const [isShareOpen, setIsShareOpen] = useState(false);
   const [isBulkOpen, setIsBulkOpen] = useState(false);
+  const { addToEnquiry, isInEnquiry } = useEnquiry();
+
+  const isEnquired = isInEnquiry(product.id);
 
   const whatsappUrl = getProductWhatsAppLink({
     productName: product.name,
+    category: product.category,
     priceLabel: product.priceLabel,
   });
 
@@ -120,6 +125,18 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 </span>
               </div>
               <div className="flex items-center gap-1.5 sm:gap-2">
+                <button
+                  onClick={() => addToEnquiry(product)}
+                  className={`px-2.5 sm:px-3 py-2 text-[11px] sm:text-xs font-bold rounded-xl transition-all min-h-[36px] flex items-center gap-1 border ${
+                    isEnquired
+                      ? 'bg-amber-500 text-clay-950 border-amber-500'
+                      : 'bg-amber-100 hover:bg-amber-200 text-amber-900 border-amber-300/60'
+                  }`}
+                  title="Add to multi-product WhatsApp enquiry list"
+                >
+                  {isEnquired ? <Check className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
+                  <span>{isEnquired ? 'Enquired' : 'Enquiry'}</span>
+                </button>
                 <Link
                   to={`/product/${product.slug}`}
                   className="px-2.5 sm:px-3 py-2 bg-clay-100 hover:bg-clay-200 text-clay-800 text-[11px] sm:text-xs font-semibold rounded-xl transition-colors min-h-[36px] flex items-center justify-center"
@@ -131,7 +148,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-1 px-2.5 sm:px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] sm:text-xs font-semibold rounded-xl shadow-sm transition-all hover:scale-105 min-h-[36px]"
-                  title="Enquire on WhatsApp"
+                  title="Direct WhatsApp"
                 >
                   <MessageCircle className="w-3.5 h-3.5" />
                   <span>WhatsApp</span>

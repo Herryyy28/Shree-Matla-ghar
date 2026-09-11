@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, Phone, MessageCircle, Search, ChevronDown, Flame, MapPin, Heart } from 'lucide-react';
+import { Menu, X, Phone, MessageCircle, Search, ChevronDown, Flame, MapPin, Heart, Package } from 'lucide-react';
 import { BUSINESS_CONFIG } from '../../config/business';
 import { CATEGORIES } from '../../data/categories';
 import { getGeneralWhatsAppLink } from '../../utils/whatsapp';
 import { useFavorites } from '../../hooks/useFavorites';
+import { useEnquiry } from '../../context/EnquiryContext';
 
 export const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -13,6 +14,7 @@ export const Header: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { count: favoritesCount } = useFavorites();
+  const { totalItemsCount, openEnquiryDrawer } = useEnquiry();
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -57,7 +59,7 @@ export const Header: React.FC = () => {
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'Products', path: '/products' },
+    { name: 'Pottery', path: '/pottery' },
     { name: 'Tandoors', path: '/tandoor', badge: 'Specialist' },
     { name: 'Ganpati', path: '/ganpati', badge: 'Eco' },
     { name: 'Wholesale', path: '/wholesale' },
@@ -92,7 +94,7 @@ export const Header: React.FC = () => {
             : 'bg-clay-100 py-3 sm:py-4 border-b border-clay-200/50'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
           
           {/* Brand Logo */}
           <Link to="/" className="flex items-center gap-2.5 sm:gap-3 group shrink-0">
@@ -175,6 +177,20 @@ export const Header: React.FC = () => {
               aria-label="Search catalog"
             >
               <Search className="w-4 h-4" />
+            </button>
+
+            <button
+              onClick={openEnquiryDrawer}
+              className="relative p-2.5 text-clay-800 hover:text-amber-900 bg-amber-100 hover:bg-amber-200 border border-amber-300/60 rounded-xl transition-colors touch-target flex items-center gap-1.5"
+              title="My Pottery Enquiry List"
+            >
+              <Package className="w-4 h-4 text-amber-900" />
+              <span className="hidden md:inline text-xs font-bold text-amber-950">Enquiry</span>
+              {totalItemsCount > 0 && (
+                <span className="bg-amber-600 text-white text-[10px] font-bold px-1.5 py-0.2 rounded-full flex items-center justify-center shadow-sm">
+                  {totalItemsCount}
+                </span>
+              )}
             </button>
 
             <Link
