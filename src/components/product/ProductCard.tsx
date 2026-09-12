@@ -173,15 +173,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               </a>
             </div>
 
-            {product.wholesaleAvailable && (
-              <button
-                onClick={() => setIsBulkOpen(true)}
-                className="w-full flex items-center justify-center gap-1.5 py-1.5 text-[11px] font-bold text-clay-700 bg-white border border-clay-200 hover:bg-clay-50 hover:border-clay-300 rounded-xl transition-colors min-h-[34px]"
-              >
-                <Package className="w-3.5 h-3.5 text-amber-800 shrink-0" />
-                <span>{t.cta.requestBulkQuote}</span>
-              </button>
-            )}
+            <button
+              onClick={() => setIsBulkOpen(true)}
+              className="w-full flex items-center justify-center gap-1.5 py-1.5 text-[11px] font-bold text-clay-700 bg-white border border-clay-200 hover:bg-clay-50 hover:border-clay-300 rounded-xl transition-colors min-h-[34px]"
+            >
+              <Package className="w-3.5 h-3.5 text-amber-800 shrink-0" />
+              <span>{t.cta.requestBulkQuote}</span>
+            </button>
           </div>
         </div>
       </div>

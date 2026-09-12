@@ -85,7 +85,7 @@ export const PRODUCTS: Product[] = [
     sizes: ["Small (12 inch inner)", "Medium (14 inch inner)"],
     material: "Traditional Fired Clay Pot",
     availability: "in-stock",
-    wholesaleAvailable: false,
+    wholesaleAvailable: true,
     featured: false,
     tags: ["home tandoor", "backyard barbecue", "mini tandoor"],
     careInstructions: ["Store under cover during monsoon season."],
