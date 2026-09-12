@@ -7,8 +7,10 @@ import { getGeneralWhatsAppLink } from '../../utils/whatsapp';
 import { useFavorites } from '../../hooks/useFavorites';
 import { useEnquiry } from '../../context/EnquiryContext';
 import { LanguageSelector } from '../common/LanguageSelector';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const Header: React.FC = () => {
+  const { t } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
@@ -59,14 +61,14 @@ export const Header: React.FC = () => {
   };
 
   const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'Pottery', path: '/pottery' },
-    { name: 'Tandoors', path: '/tandoor', badge: 'Specialist' },
-    { name: 'Ganpati', path: '/ganpati', badge: 'Eco' },
-    { name: 'Wholesale', path: '/wholesale' },
-    { name: 'Gallery', path: '/gallery' },
-    { name: 'Our Story', path: '/our-story' },
-    { name: 'Contact', path: '/contact' },
+    { name: t.nav.home, path: '/' },
+    { name: t.nav.pottery, path: '/pottery' },
+    { name: t.nav.tandoors, path: '/tandoor', badge: 'Specialist' },
+    { name: t.nav.ganpati, path: '/ganpati', badge: 'Eco' },
+    { name: t.nav.wholesale, path: '/wholesale' },
+    { name: t.nav.gallery, path: '/gallery' },
+    { name: t.nav.ourStory, path: '/our-story' },
+    { name: t.nav.contact, path: '/contact' },
   ];
 
   return (
@@ -143,7 +145,7 @@ export const Header: React.FC = () => {
                 onClick={() => setIsCategoryOpen(!isCategoryOpen)}
                 className="text-[11px] xl:text-xs font-bold uppercase tracking-wider text-clay-800 hover:text-clay-500 flex items-center gap-1 py-1.5"
               >
-                Categories
+                {t.nav.categories}
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform ${isCategoryOpen ? 'rotate-180' : ''}`} />
               </button>
 
@@ -160,7 +162,7 @@ export const Header: React.FC = () => {
                     >
                       <span className="text-lg">{cat.icon}</span>
                       <div>
-                        <p className="font-semibold text-clay-900">{cat.name}</p>
+                        <p className="font-semibold text-clay-900">{(t.nav.categoryList as Record<string, string>)?.[cat.slug] || cat.name}</p>
                         <p className="text-[11px] text-clay-500 line-clamp-1">{cat.description}</p>
                       </div>
                     </Link>
@@ -188,7 +190,7 @@ export const Header: React.FC = () => {
               title="My Pottery Enquiry List"
             >
               <Package className="w-4 h-4 text-amber-900" />
-              <span className="hidden md:inline text-xs font-bold text-amber-950">Enquiry</span>
+              <span className="hidden md:inline text-xs font-bold text-amber-950">{t.nav.enquiry}</span>
               {totalItemsCount > 0 && (
                 <span className="bg-amber-600 text-white text-[10px] font-bold px-1.5 py-0.2 rounded-full flex items-center justify-center shadow-sm">
                   {totalItemsCount}
@@ -214,7 +216,7 @@ export const Header: React.FC = () => {
               className="hidden xl:flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-clay-800 hover:text-clay-900 bg-white border border-clay-200 rounded-xl hover:bg-clay-50 transition-colors touch-target"
             >
               <Phone className="w-3.5 h-3.5 text-clay-500" />
-              <span>Call Store</span>
+              <span>{t.cta.callStore}</span>
             </a>
 
             <a
@@ -267,7 +269,7 @@ export const Header: React.FC = () => {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search Drum Tandoor, Matka, Kulhad, Handi, Ganpati..."
+                placeholder={t.common.searchPlaceholder}
                 className="w-full bg-white text-clay-900 text-sm pl-11 pr-24 py-3 rounded-2xl border border-clay-300 focus:outline-none focus:ring-2 focus:ring-clay-500 shadow-sm min-h-[44px]"
                 autoFocus
               />
@@ -323,7 +325,7 @@ export const Header: React.FC = () => {
               </div>
 
               <div className="pt-2">
-                <p className="text-[11px] font-bold text-clay-500 uppercase tracking-wider mb-2">Categories</p>
+                <p className="text-[11px] font-bold text-clay-500 uppercase tracking-wider mb-2">{t.nav.categories}</p>
                 <div className="grid grid-cols-2 gap-2">
                   {CATEGORIES.map((cat) => (
                     <Link
@@ -332,7 +334,7 @@ export const Header: React.FC = () => {
                       className="p-2 bg-white rounded-xl border border-clay-200 flex items-center gap-2 text-xs font-semibold text-clay-800 hover:border-clay-400 min-h-[40px]"
                     >
                       <span>{cat.icon}</span>
-                      <span className="truncate">{cat.name}</span>
+                      <span className="truncate">{(t.nav.categoryList as Record<string, string>)?.[cat.slug] || cat.name}</span>
                     </Link>
                   ))}
                 </div>

@@ -5,9 +5,11 @@ import { PRODUCTS } from '../data/products';
 import { CATEGORIES } from '../data/categories';
 import { ProductCard } from '../components/product/ProductCard';
 import { updateSeoMetaData } from '../utils/seo';
+import { useLanguage } from '../context/LanguageContext';
 
 export const ProductsPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { t } = useLanguage();
 
   const selectedCategory = searchParams.get('category') || 'all';
   const initialSearch = searchParams.get('search') || '';
@@ -104,9 +106,9 @@ export const ProductsPage: React.FC = () => {
       <div className="bg-clay-900 text-white rounded-3xl p-6 sm:p-10 lg:p-12 shadow-earth relative overflow-hidden">
         <div className="relative z-10 max-w-2xl space-y-2.5 sm:space-y-3">
           <span className="bg-clay-700 text-clay-200 text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider inline-block">
-            Digital Showroom Catalog
+            {t.nav.pottery}
           </span>
-          <h1 className="font-serif text-fluid-h1 font-bold">Traditional Pottery Products</h1>
+          <h1 className="font-serif text-fluid-h1 font-bold">{t.nav.pottery} Collection</h1>
           <p className="text-clay-300 text-xs sm:text-sm leading-relaxed">
             Direct artisan prices for natural clay matkas, cookware, planters, kulhads, and eco-friendly Ganpati idols.
           </p>
@@ -122,13 +124,14 @@ export const ProductsPage: React.FC = () => {
             : 'bg-white text-clay-800 border border-clay-200 hover:bg-clay-100'
             }`}
         >
-          <span>🏺 All Products</span>
+          <span>🏺 {t.common.all}</span>
           <span className="text-[10px] opacity-75">({PRODUCTS.length})</span>
         </button>
 
         {CATEGORIES.map((cat) => {
           const count = PRODUCTS.filter((p) => p.category === cat.slug).length;
           const isSelected = selectedCategory === cat.slug;
+          const categoryName = (t.nav.categoryList as Record<string, string>)?.[cat.slug] || cat.name;
 
           return (
             <button
@@ -139,7 +142,7 @@ export const ProductsPage: React.FC = () => {
                 : 'bg-white text-clay-800 border border-clay-200 hover:bg-clay-100'
                 }`}
             >
-              <span>{cat.icon} {cat.name}</span>
+              <span>{cat.icon} {categoryName}</span>
               <span className="text-[10px] opacity-75">({count})</span>
             </button>
           );
@@ -155,7 +158,7 @@ export const ProductsPage: React.FC = () => {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search by product name, category, or keyword..."
+            placeholder={t.common.searchPlaceholder}
             className="w-full bg-clay-50/70 text-clay-900 text-xs sm:text-sm pl-10 pr-4 py-2.5 rounded-xl border border-clay-300 focus:outline-none focus:ring-2 focus:ring-clay-500 min-h-[44px]"
           />
           <Search className="w-4 h-4 text-clay-400 absolute left-3.5 top-3.5" />
@@ -172,7 +175,7 @@ export const ProductsPage: React.FC = () => {
               onChange={(e) => setWholesaleOnly(e.target.checked)}
               className="rounded text-clay-500 focus:ring-clay-500 w-4 h-4"
             />
-            <span>Bulk Orders Only</span>
+            <span>{t.badge.bulkOrder}</span>
           </label>
 
           {/* Sort Dropdown */}

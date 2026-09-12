@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, Trash2, Plus, Minus, MessageCircle, Package, Send, ArrowRight } from 'lucide-react';
 import { useEnquiry } from '../../context/EnquiryContext';
+import { useLanguage } from '../../context/LanguageContext';
 import { ImageWithFallback } from '../common/ImageWithFallback';
 import { BUSINESS_CONFIG } from '../../config/business';
 import { trackBulkEnquiry } from '../../utils/analytics';
@@ -16,6 +17,7 @@ export const MultiEnquiryDrawer: React.FC = () => {
     totalItemsCount,
     generateWhatsAppUrl,
   } = useEnquiry();
+  const { t } = useLanguage();
 
   const [customerName, setCustomerName] = useState('');
   const [customerLocation, setCustomerLocation] = useState('');
@@ -50,9 +52,9 @@ export const MultiEnquiryDrawer: React.FC = () => {
               <Package className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-serif font-bold text-base sm:text-lg text-white">My Pottery Enquiry</h3>
+              <h3 className="font-serif font-bold text-base sm:text-lg text-white">{t.enquiryDrawer.title}</h3>
               <p className="text-xs text-clay-300">
-                {totalItemsCount > 0 ? `${totalItemsCount} items selected for WhatsApp quote` : 'Enquiry list is empty'}
+                {totalItemsCount > 0 ? `${totalItemsCount} ${t.enquiryDrawer.subtitle}` : t.enquiryDrawer.emptyText}
               </p>
             </div>
           </div>
@@ -73,9 +75,9 @@ export const MultiEnquiryDrawer: React.FC = () => {
                 <Package className="w-8 h-8" />
               </div>
               <div className="space-y-2">
-                <h4 className="font-serif font-bold text-lg text-clay-900">Your Enquiry is Empty</h4>
+                <h4 className="font-serif font-bold text-lg text-clay-900">{t.enquiryDrawer.emptyTitle}</h4>
                 <p className="text-xs text-clay-600 leading-relaxed">
-                  Explore our pottery and add products to your enquiry.
+                  {t.enquiryDrawer.emptyText}
                 </p>
                 <button
                   onClick={() => {
@@ -84,7 +86,7 @@ export const MultiEnquiryDrawer: React.FC = () => {
                   }}
                   className="inline-block mt-2 px-5 py-2.5 bg-clay-500 hover:bg-clay-600 text-white font-bold text-xs rounded-xl transition-colors shadow-sm"
                 >
-                  Browse Pottery
+                  {t.enquiryDrawer.browsePottery}
                 </button>
               </div>
             </div>
@@ -97,7 +99,7 @@ export const MultiEnquiryDrawer: React.FC = () => {
                   className="text-xs font-semibold text-red-600 hover:text-red-700 flex items-center gap-1"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
-                  Clear Enquiry
+                  {t.cta.clearEnquiry}
                 </button>
               </div>
 
@@ -115,7 +117,7 @@ export const MultiEnquiryDrawer: React.FC = () => {
                       <h5 className="font-serif font-bold text-xs sm:text-sm text-clay-900 truncate">{product.name}</h5>
                       <p className="text-[11px] text-clay-500 capitalize">{product.category}</p>
                       <span className="text-[11px] font-semibold text-amber-900 block mt-0.5">
-                        {product.priceLabel || 'Price on Request'}
+                        {product.priceLabel || t.product.priceOnRequest}
                       </span>
                     </div>
 
@@ -150,7 +152,7 @@ export const MultiEnquiryDrawer: React.FC = () => {
 
               {/* Customer Contact Inputs */}
               <div className="pt-4 border-t border-clay-200 space-y-3">
-                <h5 className="text-xs font-bold uppercase tracking-wider text-clay-800">Quick Contact Details (Optional)</h5>
+                <h5 className="text-xs font-bold uppercase tracking-wider text-clay-800">{t.enquiryDrawer.additionalNoteLabel}</h5>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   <input
@@ -176,7 +178,7 @@ export const MultiEnquiryDrawer: React.FC = () => {
                   maxLength={250}
                   value={customNote}
                   onChange={(e) => setCustomNote(e.target.value.slice(0, 250))}
-                  placeholder="Special instructions, delivery date, custom sizes... (max 250 chars)"
+                  placeholder={t.enquiryDrawer.notePlaceholder}
                   className="w-full px-3.5 py-2 text-xs rounded-xl border border-clay-300 focus:outline-none focus:ring-2 focus:ring-clay-500 bg-white resize-none"
                 />
               </div>
@@ -192,7 +194,7 @@ export const MultiEnquiryDrawer: React.FC = () => {
               className="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs sm:text-sm rounded-2xl shadow-earth transition-all flex items-center justify-center gap-2 min-h-[48px]"
             >
               <MessageCircle className="w-5 h-5 shrink-0" />
-              <span>Send Multi-Item Enquiry on WhatsApp</span>
+              <span>{t.cta.sendEnquiryWhatsApp}</span>
               <ArrowRight className="w-4 h-4 shrink-0" />
             </button>
             <p className="text-[10px] text-center text-clay-500">

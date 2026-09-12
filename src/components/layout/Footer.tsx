@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail, Clock, MessageCircle, Instagram, Facebook, Heart, Navigation } from 'lucide-react';
 import { BUSINESS_CONFIG } from '../../config/business';
 import { getGeneralWhatsAppLink } from '../../utils/whatsapp';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const Footer: React.FC = () => {
+  const { t } = useLanguage();
+
   return (
     <footer className="bg-clay-900 text-clay-100 pt-16 pb-24 md:pb-12 border-t border-clay-800">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -32,7 +35,7 @@ export const Footer: React.FC = () => {
                 className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-clay-800 hover:bg-clay-700 text-amber-400 text-xs font-bold transition-colors border border-clay-700"
               >
                 <Navigation className="w-4 h-4" />
-                <span>Google Maps Location</span>
+                <span>{t.cta.storeLocation}</span>
               </a>
               <a
                 href={getGeneralWhatsAppLink()}
@@ -48,14 +51,14 @@ export const Footer: React.FC = () => {
 
           {/* Core Categories */}
           <div>
-            <h4 className="font-serif font-bold text-lg text-white mb-4">Our Products</h4>
+            <h4 className="font-serif font-bold text-lg text-white mb-4">{t.nav.pottery}</h4>
             <ul className="space-y-2 text-sm text-clay-300">
               <li><Link to="/tandoor" className="hover:text-white font-bold text-amber-400 transition-colors">Tandoor Collection</Link></li>
-              <li><Link to="/products?category=matka" className="hover:text-white transition-colors">Matka & Surahi</Link></li>
-              <li><Link to="/products?category=kulhad" className="hover:text-white transition-colors">Chai Kulhad & Mugs</Link></li>
-              <li><Link to="/products?category=handi" className="hover:text-white transition-colors">Dum Biryani Handi</Link></li>
-              <li><Link to="/products?category=planters" className="hover:text-white transition-colors">Terracotta Gamla Planters</Link></li>
-              <li><Link to="/ganpati" className="hover:text-white text-amber-300 font-semibold transition-colors">Eco Ganpati Idols</Link></li>
+              <li><Link to="/pottery?category=matka" className="hover:text-white transition-colors">{t.nav.categoryList?.matka || 'Matka & Surahi'}</Link></li>
+              <li><Link to="/pottery?category=kulhad" className="hover:text-white transition-colors">{t.nav.categoryList?.kulhad || 'Chai Kulhad'}</Link></li>
+              <li><Link to="/pottery?category=handi" className="hover:text-white transition-colors">{t.nav.categoryList?.handi || 'Cooking Handi'}</Link></li>
+              <li><Link to="/pottery?category=planters" className="hover:text-white transition-colors">{t.nav.categoryList?.planters || 'Terracotta Planters'}</Link></li>
+              <li><Link to="/ganpati" className="hover:text-white text-amber-300 font-semibold transition-colors">{t.nav.ecoGanpati}</Link></li>
             </ul>
           </div>
 
@@ -63,13 +66,12 @@ export const Footer: React.FC = () => {
           <div>
             <h4 className="font-serif font-bold text-lg text-white mb-4">Quick Links</h4>
             <ul className="space-y-2 text-sm text-clay-300">
-              <li><Link to="/our-story" className="hover:text-white transition-colors">Our Story & Craft</Link></li>
-              <li><Link to="/wholesale" className="hover:text-white transition-colors">Wholesale & Bulk Supplies</Link></li>
-              <li><Link to="/gallery" className="hover:text-white transition-colors">Photo Gallery</Link></li>
-              <li><Link to="/contact" className="hover:text-white transition-colors">Visit Our Store</Link></li>
+              <li><Link to="/our-story" className="hover:text-white transition-colors">{t.nav.craftStory}</Link></li>
+              <li><Link to="/wholesale" className="hover:text-white transition-colors">{t.nav.bulkWholesale}</Link></li>
+              <li><Link to="/gallery" className="hover:text-white transition-colors">{t.nav.gallery}</Link></li>
+              <li><Link to="/contact" className="hover:text-white transition-colors">{t.nav.contactStore}</Link></li>
               <li><Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
               <li><Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link></li>
-              <li><Link to="/shipping" className="hover:text-white transition-colors">Shipping & Pickup</Link></li>
             </ul>
           </div>
 

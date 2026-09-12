@@ -27,17 +27,17 @@ export const ProductActivityBadge: React.FC<ProductActivityBadgeProps> = ({
 
   if (variant === 'compact') {
     return (
-      <div className={`flex items-center gap-3 text-[11px] text-clay-600 font-medium ${className}`}>
-        <span className="flex items-center gap-1" title="Real visitor views">
+      <div className={`flex items-center gap-2.5 text-[11px] text-clay-600 font-medium flex-wrap ${className}`}>
+        <span className="flex items-center gap-1 shrink-0" title="Real visitor views">
           <Eye className="w-3.5 h-3.5 text-clay-400" />
           <SubtleCountUp value={metrics.views} /> views
         </span>
-        <span className="flex items-center gap-1" title="Direct product shares">
+        <span className="flex items-center gap-1 shrink-0" title="Direct product shares">
           <Share2 className="w-3.5 h-3.5 text-clay-400" />
           <SubtleCountUp value={metrics.shares} /> shares
         </span>
         {metrics.verifiedSales !== undefined && metrics.verifiedSales > 0 && (
-          <span className="flex items-center gap-1 text-emerald-700 font-bold" title="Verified completed store sales">
+          <span className="flex items-center gap-1 text-emerald-700 font-bold shrink-0" title="Verified completed store sales">
             <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
             <SubtleCountUp value={metrics.verifiedSales} /> verified sales
           </span>

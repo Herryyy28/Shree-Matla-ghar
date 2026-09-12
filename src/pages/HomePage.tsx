@@ -9,10 +9,13 @@ import { getGeneralWhatsAppLink } from '../utils/whatsapp';
 import { BUSINESS_CONFIG } from '../config/business';
 import { updateSeoMetaData } from '../utils/seo';
 import { ImageWithFallback } from '../components/common/ImageWithFallback';
+import { useLanguage } from '../context/LanguageContext';
 
 import { VerifiedBusinessReach } from '../components/home/VerifiedBusinessReach';
 
 export const HomePage: React.FC = () => {
+  const { t } = useLanguage();
+
   useEffect(() => {
     updateSeoMetaData({
       title: `${BUSINESS_CONFIG.brandName} | ${BUSINESS_CONFIG.listingName} - Bhavnagar`,
@@ -94,10 +97,10 @@ export const HomePage: React.FC = () => {
             {/* CTAs */}
             <div className="pt-2 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 sm:gap-4">
               <Link
-                to="/products"
+                to="/pottery"
                 className="px-6 py-3.5 sm:py-4 bg-clay-400 hover:bg-clay-500 text-white font-bold text-xs sm:text-sm rounded-2xl shadow-earth transition-all duration-300 flex items-center justify-center gap-2 hover:scale-105 min-h-[44px]"
               >
-                <span>Explore Products</span>
+                <span>{t.cta.exploreProducts}</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
 
@@ -108,7 +111,7 @@ export const HomePage: React.FC = () => {
                 className="px-6 py-3.5 sm:py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm rounded-2xl shadow-earth transition-all duration-300 flex items-center justify-center gap-2 hover:scale-105 min-h-[44px]"
               >
                 <MessageCircle className="w-4 h-4" />
-                <span>WhatsApp Us</span>
+                <span>{t.cta.whatsappQuote}</span>
               </a>
 
               <a
@@ -116,7 +119,7 @@ export const HomePage: React.FC = () => {
                 className="px-5 py-3.5 sm:py-4 bg-clay-800/80 hover:bg-clay-800 text-clay-200 font-semibold text-xs sm:text-sm rounded-2xl border border-clay-700 backdrop-blur-sm transition-colors flex items-center justify-center gap-1.5 min-h-[44px]"
               >
                 <Phone className="w-4 h-4 text-amber-400" />
-                <span>Call Store</span>
+                <span>{t.cta.callStore}</span>
               </a>
             </div>
 
@@ -152,7 +155,7 @@ export const HomePage: React.FC = () => {
                 <h3 className="font-serif text-lg sm:text-xl font-bold text-white">Drum, Trolly & SS Tandoors</h3>
                 <p className="text-xs text-clay-300">Commercial & domestic clay tandoors for restaurants, caterers & dhabas.</p>
                 <div className="pt-2 flex items-center justify-between">
-                  <span className="font-serif font-bold text-xs sm:text-sm text-clay-200">Price on Request</span>
+                  <span className="font-serif font-bold text-xs sm:text-sm text-clay-200">{t.product.priceOnRequest}</span>
                   <Link
                     to="/tandoor"
                     className="text-xs font-bold text-amber-300 underline hover:text-white"
@@ -183,43 +186,47 @@ export const HomePage: React.FC = () => {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
           <div>
             <span className="text-[11px] sm:text-xs font-bold text-clay-500 uppercase tracking-widest block">Showroom Catalog</span>
-            <h2 className="font-serif text-fluid-h2 font-bold text-clay-900 mt-0.5">Product Categories</h2>
+            <h2 className="font-serif text-fluid-h2 font-bold text-clay-900 mt-0.5">{t.nav.pottery} Categories</h2>
           </div>
           <Link
-            to="/products"
+            to="/pottery"
             className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-clay-600 hover:text-clay-900 transition-colors"
           >
-            <span>View All Categories</span>
+            <span>{t.cta.exploreProducts}</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
-          {CATEGORIES.map((cat) => (
-            <Link
-              key={cat.slug}
-              to={cat.slug === 'tandoor' ? '/tandoor' : `/products?category=${cat.slug}`}
-              className="group bg-white rounded-2xl border border-clay-200 p-3.5 sm:p-4 shadow-earth hover:shadow-earth-lg transition-all duration-300 flex flex-col justify-between overflow-hidden"
-            >
-              <div className="aspect-[4/3] rounded-xl overflow-hidden bg-clay-100 mb-2.5 sm:mb-3 relative">
-                <ImageWithFallback
-                  src={cat.image}
-                  alt={cat.name}
-                  loading="lazy"
-                  className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
-                />
-                <div className="absolute top-2 left-2 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-sm sm:text-base shadow-sm">
-                  {cat.icon}
+          {CATEGORIES.map((cat) => {
+            const catName = (t.nav.categoryList as Record<string, string>)?.[cat.slug] || cat.name;
+
+            return (
+              <Link
+                key={cat.slug}
+                to={cat.slug === 'tandoor' ? '/tandoor' : `/pottery?category=${cat.slug}`}
+                className="group bg-white rounded-2xl border border-clay-200 p-3.5 sm:p-4 shadow-earth hover:shadow-earth-lg transition-all duration-300 flex flex-col justify-between overflow-hidden"
+              >
+                <div className="aspect-[4/3] rounded-xl overflow-hidden bg-clay-100 mb-2.5 sm:mb-3 relative">
+                  <ImageWithFallback
+                    src={cat.image}
+                    alt={catName}
+                    loading="lazy"
+                    className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
+                  />
+                  <div className="absolute top-2 left-2 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-sm sm:text-base shadow-sm">
+                    {cat.icon}
+                  </div>
                 </div>
-              </div>
-              <div>
-                <h3 className="font-serif font-bold text-sm sm:text-base text-clay-900 group-hover:text-clay-500 transition-colors">
-                  {cat.name}
-                </h3>
-                <p className="text-[11px] sm:text-xs text-clay-500 line-clamp-1 mt-0.5">{cat.description}</p>
-              </div>
-            </Link>
-          ))}
+                <div>
+                  <h3 className="font-serif font-bold text-sm sm:text-base text-clay-900 group-hover:text-clay-500 transition-colors">
+                    {catName}
+                  </h3>
+                  <p className="text-[11px] sm:text-xs text-clay-500 line-clamp-1 mt-0.5">{cat.description}</p>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </section>
 
@@ -227,7 +234,7 @@ export const HomePage: React.FC = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
         <div className="text-center max-w-2xl mx-auto space-y-2">
           <span className="bg-clay-200 text-clay-800 text-[11px] sm:text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider inline-block">
-            Popular Selections
+            {t.badge.popular}
           </span>
           <h2 className="font-serif text-fluid-h2 font-bold text-clay-900">Featured Clay Products</h2>
           <p className="text-clay-600 text-xs sm:text-sm">
@@ -243,10 +250,10 @@ export const HomePage: React.FC = () => {
 
         <div className="text-center pt-2 sm:pt-4">
           <Link
-            to="/products"
+            to="/pottery"
             className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 bg-clay-900 hover:bg-clay-800 text-white font-bold text-xs sm:text-sm rounded-2xl shadow-earth transition-all w-full sm:w-auto min-h-[44px]"
           >
-            <span>Browse Complete Digital Showroom ({PRODUCTS.length}+ Items)</span>
+            <span>{t.cta.exploreProducts} ({PRODUCTS.length}+ Items)</span>
             <ArrowRight className="w-4 h-4 shrink-0" />
           </Link>
         </div>
@@ -257,7 +264,7 @@ export const HomePage: React.FC = () => {
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <span className="bg-emerald-100 text-emerald-800 text-[11px] sm:text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider inline-block">
-              Just In
+              {t.badge.new}
             </span>
             <h2 className="font-serif text-fluid-h2 font-bold text-clay-900">New Arrivals</h2>
             <p className="text-clay-600 text-xs sm:text-sm">
@@ -288,7 +295,7 @@ export const HomePage: React.FC = () => {
             to="/gallery"
             className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-clay-700 hover:text-clay-900 transition-colors bg-white border border-clay-200 px-4 py-2.5 rounded-xl min-h-[44px]"
           >
-            <span>View Full Gallery</span>
+            <span>{t.nav.gallery}</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -416,13 +423,13 @@ export const HomePage: React.FC = () => {
                 className="px-5 py-3 bg-clay-900 hover:bg-clay-800 text-white font-bold text-xs sm:text-sm rounded-xl transition-colors flex items-center justify-center gap-2 min-h-[44px]"
               >
                 <Navigation className="w-4 h-4 text-amber-400 shrink-0" />
-                <span>Open Google Maps</span>
+                <span>{t.cta.storeLocation}</span>
               </a>
               <Link
                 to="/contact"
                 className="px-5 py-3 bg-white hover:bg-clay-50 text-clay-900 font-bold text-xs sm:text-sm rounded-xl border border-clay-300 transition-colors text-center min-h-[44px] flex items-center justify-center"
               >
-                Contact & Hours
+                {t.nav.contactStore}
               </Link>
             </div>
           </div>

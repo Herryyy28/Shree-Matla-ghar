@@ -8,6 +8,7 @@ import { ProductCard } from '../components/product/ProductCard';
 import { ShareModal } from '../components/product/ShareModal';
 import { BUSINESS_CONFIG } from '../config/business';
 import { useEnquiry } from '../context/EnquiryContext';
+import { useLanguage } from '../context/LanguageContext';
 import { FavoriteButton } from '../components/common/FavoriteButton';
 import { BulkEnquiryDrawer } from '../components/common/BulkEnquiryDrawer';
 import { trackProductView } from '../utils/analytics';
@@ -18,6 +19,7 @@ import { ProductActivityBadge } from '../components/product/ProductActivityBadge
 export const ProductDetailPage: React.FC = () => {
   const { slug, category } = useParams<{ slug?: string; category?: string }>();
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   // Robust product resolution by slug or id, handling URL encoding and case sensitivity
   const rawParam = (slug || category || '').trim();
@@ -73,10 +75,10 @@ export const ProductDetailPage: React.FC = () => {
         </p>
         <div className="pt-2 flex items-center justify-center gap-3 flex-wrap">
           <Link
-            to="/products"
+            to="/pottery"
             className="px-5 py-2.5 bg-clay-500 hover:bg-clay-600 text-white font-bold text-xs rounded-xl shadow-sm transition-colors"
           >
-            Browse Pottery
+            {t.enquiryDrawer.browsePottery}
           </Link>
           <a
             href={getGeneralWhatsAppLink()}
@@ -85,7 +87,7 @@ export const ProductDetailPage: React.FC = () => {
             className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-sm transition-colors inline-flex items-center gap-1.5"
           >
             <MessageCircle className="w-3.5 h-3.5" />
-            <span>WhatsApp Us</span>
+            <span>{t.cta.whatsappQuote}</span>
           </a>
         </div>
       </div>
@@ -111,9 +113,9 @@ export const ProductDetailPage: React.FC = () => {
       {/* Navigation Breadcrumbs & Back Button */}
       <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-clay-600 font-medium">
         <nav className="flex items-center gap-1.5 flex-wrap truncate text-[11px] sm:text-xs">
-          <Link to="/" className="hover:text-clay-900 transition-colors">Home</Link>
+          <Link to="/" className="hover:text-clay-900 transition-colors">{t.nav.home}</Link>
           <span>/</span>
-          <Link to="/pottery" className="hover:text-clay-900 transition-colors">Pottery</Link>
+          <Link to="/pottery" className="hover:text-clay-900 transition-colors">{t.nav.pottery}</Link>
           <span>/</span>
           <Link to={`/pottery?category=${product.category}`} className="hover:text-clay-900 capitalize transition-colors">
             {product.category}
@@ -127,7 +129,7 @@ export const ProductDetailPage: React.FC = () => {
           className="inline-flex items-center gap-1.5 text-xs font-bold text-clay-700 hover:text-clay-900 bg-white border border-clay-200 px-3.5 py-2.5 rounded-xl transition-colors min-h-[44px]"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Back</span>
+          <span>{t.common.back}</span>
         </button>
       </div>
 
@@ -144,7 +146,7 @@ export const ProductDetailPage: React.FC = () => {
             />
             {product.featured && (
               <span className="absolute top-3 left-3 sm:top-4 sm:left-4 bg-clay-500 text-white text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
-                Featured Pottery
+                {t.badge.popular}
               </span>
             )}
           </div>
@@ -190,7 +192,7 @@ export const ProductDetailPage: React.FC = () => {
 
             <div className="mt-3 flex flex-wrap items-center gap-3 sm:gap-4">
               <span className="font-serif font-bold text-xl sm:text-2xl text-clay-900">
-                {product.priceLabel || (product.price ? `₹${product.price}` : 'Price on Request')}
+                {product.priceLabel || (product.price ? `₹${product.price}` : t.product.priceOnRequest)}
               </span>
               {product.availability === 'in-stock' ? (
                 <span className="bg-emerald-100 text-emerald-800 text-[11px] sm:text-xs font-bold px-2.5 py-1 rounded-md flex items-center gap-1">
@@ -236,13 +238,13 @@ export const ProductDetailPage: React.FC = () => {
           {/* Additional Notes input for WhatsApp enquiry */}
           <div className="space-y-1.5">
             <label className="block text-[11px] sm:text-xs font-bold uppercase tracking-wider text-clay-800">
-              Enquiry Note / Delivery Location (Optional):
+              {t.enquiryDrawer.additionalNoteLabel}
             </label>
             <input
               type="text"
               value={customNote}
               onChange={(e) => setCustomNote(e.target.value)}
-              placeholder="e.g. Need delivery to Subhashnagar, Bhavnagar"
+              placeholder={t.enquiryDrawer.notePlaceholder}
               className="w-full bg-white text-clay-900 text-xs px-3.5 py-3 rounded-xl border border-clay-300 focus:outline-none focus:ring-2 focus:ring-clay-500 min-h-[44px]"
             />
           </div>
@@ -260,12 +262,12 @@ export const ProductDetailPage: React.FC = () => {
                 {product && isInEnquiry(product.id) ? (
                   <>
                     <Check className="w-5 h-5 shrink-0" />
-                    <span>Added to Enquiry List</span>
+                    <span>{t.cta.addedToEnquiry}</span>
                   </>
                 ) : (
                   <>
                     <Plus className="w-5 h-5 shrink-0 text-amber-900" />
-                    <span>Add to Multi-Product Enquiry</span>
+                    <span>{t.cta.addToEnquiry}</span>
                   </>
                 )}
               </button>
@@ -277,7 +279,7 @@ export const ProductDetailPage: React.FC = () => {
                 className="py-3.5 sm:py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs sm:text-sm rounded-2xl shadow-earth transition-all duration-300 flex items-center justify-center gap-2 hover:scale-[1.01] min-h-[48px]"
               >
                 <MessageCircle className="w-5 h-5 shrink-0" />
-                <span>Instant WhatsApp Quote</span>
+                <span>{t.cta.whatsappQuote}</span>
               </a>
             </div>
 
@@ -288,7 +290,7 @@ export const ProductDetailPage: React.FC = () => {
                 className="py-2.5 px-3 bg-clay-100 hover:bg-clay-200 text-clay-900 font-bold text-xs rounded-xl border border-clay-300 transition-colors flex items-center justify-center gap-1.5 min-h-[40px]"
               >
                 <Phone className="w-3.5 h-3.5 text-clay-700" />
-                <span>Call Store</span>
+                <span>{t.cta.callStore}</span>
               </a>
               <a
                 href={BUSINESS_CONFIG.googleMapsUrl}
@@ -297,7 +299,7 @@ export const ProductDetailPage: React.FC = () => {
                 className="py-2.5 px-3 bg-clay-100 hover:bg-clay-200 text-clay-900 font-bold text-xs rounded-xl border border-clay-300 transition-colors flex items-center justify-center gap-1.5 min-h-[40px]"
               >
                 <MapPin className="w-3.5 h-3.5 text-clay-700" />
-                <span>Store Location</span>
+                <span>{t.cta.storeLocation}</span>
               </a>
             </div>
 
@@ -307,7 +309,7 @@ export const ProductDetailPage: React.FC = () => {
                 className="w-full py-3 sm:py-3.5 bg-amber-50 hover:bg-amber-100 text-amber-950 font-bold text-xs rounded-2xl border border-amber-200 transition-colors flex items-center justify-center gap-2 min-h-[44px]"
               >
                 <Package className="w-4 h-4 text-amber-800" />
-                <span>Looking for Wholesale Bulk Supply? →</span>
+                <span>{t.cta.requestBulkQuote}</span>
               </button>
             )}
           </div>
@@ -333,7 +335,7 @@ export const ProductDetailPage: React.FC = () => {
 
           {/* Technical Specifications */}
           <div className="bg-white rounded-2xl p-4 sm:p-5 border border-clay-200 space-y-3">
-            <h4 className="font-serif font-bold text-sm sm:text-base text-clay-900">Product Specifications</h4>
+            <h4 className="font-serif font-bold text-sm sm:text-base text-clay-900">{t.product.specifications}</h4>
             <div className="grid grid-cols-2 gap-3 text-xs">
               <div>
                 <span className="text-clay-500 block">Material</span>
@@ -370,7 +372,7 @@ export const ProductDetailPage: React.FC = () => {
           {product.careInstructions && product.careInstructions.length > 0 && (
             <div className="bg-clay-50 rounded-2xl p-4 sm:p-5 border border-clay-200 space-y-2">
               <h4 className="font-serif font-bold text-xs sm:text-sm text-clay-900 flex items-center gap-1.5">
-                <Info className="w-4 h-4 text-clay-500 shrink-0" /> Care & Usage Guide
+                <Info className="w-4 h-4 text-clay-500 shrink-0" /> {t.product.careGuide}
               </h4>
               <ul className="space-y-1.5 text-xs text-clay-700 list-disc list-inside">
                 {product.careInstructions.map((tip, idx) => (
