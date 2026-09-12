@@ -6,6 +6,7 @@ import { CATEGORIES } from '../../data/categories';
 import { getGeneralWhatsAppLink } from '../../utils/whatsapp';
 import { useFavorites } from '../../hooks/useFavorites';
 import { useEnquiry } from '../../context/EnquiryContext';
+import { LanguageSelector } from '../common/LanguageSelector';
 
 export const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -171,6 +172,8 @@ export const Header: React.FC = () => {
 
           {/* Right Desktop Action Buttons */}
           <div className="hidden sm:flex items-center gap-2">
+            <LanguageSelector />
+
             <button
               onClick={() => setIsSearchOpen(!isSearchOpen)}
               className="p-2.5 text-clay-700 hover:text-clay-900 bg-white border border-clay-200 rounded-xl hover:bg-clay-50 transition-colors touch-target"
@@ -334,6 +337,8 @@ export const Header: React.FC = () => {
                   ))}
                 </div>
               </div>
+
+              <LanguageSelector variant="mobile" className="mt-4 pt-3 border-t border-clay-200" />
             </div>
 
             {/* Mobile Drawer Actions */}

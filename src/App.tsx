@@ -21,6 +21,7 @@ import { NotFoundPage } from './pages/NotFoundPage';
 import { FavoritesPage } from './pages/FavoritesPage';
 
 import { EnquiryProvider } from './context/EnquiryContext';
+import { LanguageProvider } from './context/LanguageContext';
 import { MultiEnquiryDrawer } from './components/enquiry/MultiEnquiryDrawer';
 
 // Scroll to top on route change
@@ -36,13 +37,14 @@ const ScrollToTop: React.FC = () => {
 
 export const App: React.FC = () => {
   return (
-    <ToastProvider>
-      <EnquiryProvider>
-        <Router>
-          <ScrollToTop />
-          <div className="flex flex-col min-h-screen">
-            <Header />
-            <main className="flex-grow">
+    <LanguageProvider>
+      <ToastProvider>
+        <EnquiryProvider>
+          <Router>
+            <ScrollToTop />
+            <div className="flex flex-col min-h-screen overflow-x-hidden">
+              <Header />
+              <main className="flex-grow overflow-x-hidden">
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/products" element={<ProductsPage />} />
@@ -74,6 +76,7 @@ export const App: React.FC = () => {
         </Router>
       </EnquiryProvider>
     </ToastProvider>
+    </LanguageProvider>
   );
 };
 
