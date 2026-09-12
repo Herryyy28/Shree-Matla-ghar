@@ -9,6 +9,7 @@ import { FavoriteButton } from '../common/FavoriteButton';
 import { BulkEnquiryDrawer } from '../common/BulkEnquiryDrawer';
 import { useEnquiry } from '../../context/EnquiryContext';
 import { getProductCanonicalPath, buildProductUrl } from '../../utils/productUrl';
+import { ProductActivityBadge } from './ProductActivityBadge';
 
 interface ProductCardProps {
   product: Product;
@@ -116,6 +117,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 </span>
               )}
             </div>
+
+            {/* Compact Activity Counters */}
+            <ProductActivityBadge productId={product.id} variant="compact" className="mt-2.5 pt-2 border-t border-clay-100/80" />
           </div>
 
           {/* Pricing & Actions */}

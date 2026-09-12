@@ -10,6 +10,8 @@ import { BUSINESS_CONFIG } from '../config/business';
 import { updateSeoMetaData } from '../utils/seo';
 import { ImageWithFallback } from '../components/common/ImageWithFallback';
 
+import { VerifiedBusinessReach } from '../components/home/VerifiedBusinessReach';
+
 export const HomePage: React.FC = () => {
   useEffect(() => {
     updateSeoMetaData({
@@ -376,6 +378,9 @@ export const HomePage: React.FC = () => {
           ))}
         </div>
       </section>
+
+      {/* VERIFIED BUSINESS REACH COUNTERS */}
+      <VerifiedBusinessReach />
 
       {/* SECTION 7 — GOOGLE MAPS STORE LOCATION & TRUST */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">

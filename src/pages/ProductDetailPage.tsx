@@ -13,6 +13,7 @@ import { BulkEnquiryDrawer } from '../components/common/BulkEnquiryDrawer';
 import { trackProductView } from '../utils/analytics';
 import { getProductCanonicalPath, buildProductUrl } from '../utils/productUrl';
 import { ImageWithFallback } from '../components/common/ImageWithFallback';
+import { ProductActivityBadge } from '../components/product/ProductActivityBadge';
 
 export const ProductDetailPage: React.FC = () => {
   const { slug, category } = useParams<{ slug?: string; category?: string }>();
@@ -201,6 +202,8 @@ export const ProductDetailPage: React.FC = () => {
                 </span>
               )}
             </div>
+
+            <ProductActivityBadge productId={product.id} className="mt-4" />
           </div>
 
           <p className="text-clay-700 text-xs sm:text-sm leading-relaxed border-t border-b border-clay-200 py-3.5 sm:py-4">

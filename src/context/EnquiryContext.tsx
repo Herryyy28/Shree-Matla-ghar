@@ -4,6 +4,8 @@ import { BUSINESS_CONFIG } from '../config/business';
 import { PRODUCTS } from '../data/products';
 import { getMultiProductWhatsAppLink, getGeneralWhatsAppLink } from '../utils/whatsapp';
 
+import { recordActivityEvent } from '../utils/activityTracker';
+
 export interface EnquiryItem {
   product: Product;
   quantity: number;
@@ -59,6 +61,7 @@ export const EnquiryProvider: React.FC<{ children: React.ReactNode }> = ({ child
   }, [items]);
 
   const addToEnquiry = (product: Product, quantity = 1) => {
+    recordActivityEvent('enquiry_add', product.id, { quantity });
     setItems((prev) => {
       const existing = prev.find((i) => i.product.id === product.id);
       if (existing) {

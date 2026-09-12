@@ -86,3 +86,60 @@ export interface GalleryItem {
   caption: string;
   source?: 'google-maps-business-media' | 'owner-provided' | 'project-asset' | 'placeholder';
 }
+
+export type AnalyticsEventType =
+  | 'page_view'
+  | 'product_view'
+  | 'product_share'
+  | 'product_save'
+  | 'product_unsave'
+  | 'whatsapp_click'
+  | 'call_click'
+  | 'maps_click'
+  | 'enquiry_add'
+  | 'enquiry_remove'
+  | 'enquiry_submit'
+  | 'bulk_enquiry'
+  | 'gallery_view'
+  | 'video_view'
+  | 'search'
+  | 'filter_use';
+
+export interface AnalyticsEventRecord {
+  id: string;
+  eventType: AnalyticsEventType;
+  productId?: string;
+  category?: string;
+  timestamp: number;
+  sessionId: string;
+  metadata?: Record<string, unknown>;
+}
+
+export interface ProductMetrics {
+  productId: string;
+  views: number;
+  shares: number;
+  saves: number;
+  whatsappClicks: number;
+  enquiryAdds: number;
+  bulkEnquiries: number;
+  verifiedSales?: number; // ONLY populated from verified sales records, never guessed or converted from clicks
+}
+
+export interface SaleRecord {
+  id: string;
+  productId: string;
+  quantity: number;
+  completedAt: string; // ISO timestamp string
+  status: 'completed' | 'refunded' | 'cancelled';
+  orderReference?: string;
+  notes?: string;
+}
+
+export interface BusinessReachMetrics {
+  totalActiveProducts: number;
+  totalTrackedViews: number;
+  totalTrackedShares: number;
+  totalTrackedEnquiries: number;
+  verifiedProductsSold?: number;
+}

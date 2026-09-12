@@ -47,11 +47,34 @@ declare global {
   }
 }
 
+import { recordActivityEvent } from './activityTracker';
+import { AnalyticsEventType } from '../types';
+
 export function trackEvent(payload: AnalyticsPayload): void {
   // Development logging
   if (import.meta.env.DEV) {
     console.info('[Analytics]', payload);
   }
+
+  // Record into real local activity tracker with session deduplication
+  const mappedEventType: AnalyticsEventType =
+    payload.event === 'product_share' ? 'product_share' :
+    payload.event === 'product_save' ? 'product_save' :
+    payload.event === 'product_unsave' ? 'product_unsave' :
+    payload.event === 'whatsapp_click' ? 'whatsapp_click' :
+    payload.event === 'call_click' ? 'call_click' :
+    payload.event === 'maps_click' ? 'maps_click' :
+    payload.event === 'bulk_enquiry_submit' ? 'bulk_enquiry' :
+    payload.event === 'search_query' ? 'search' :
+    payload.event === 'filter_applied' ? 'filter_use' :
+    payload.event === 'gallery_view' ? 'gallery_view' :
+    payload.event === 'product_view' ? 'product_view' : 'page_view';
+
+  recordActivityEvent(mappedEventType, payload.value || payload.label, {
+    category: payload.category,
+    label: payload.label,
+    value: payload.value,
+  });
 
   // Google Analytics 4 integration
   if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
