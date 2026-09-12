@@ -12,6 +12,7 @@ import { FavoriteButton } from '../components/common/FavoriteButton';
 import { BulkEnquiryDrawer } from '../components/common/BulkEnquiryDrawer';
 import { trackProductView } from '../utils/analytics';
 import { getProductCanonicalPath, buildProductUrl } from '../utils/productUrl';
+import { ImageWithFallback } from '../components/common/ImageWithFallback';
 
 export const ProductDetailPage: React.FC = () => {
   const { slug, category } = useParams<{ slug?: string; category?: string }>();

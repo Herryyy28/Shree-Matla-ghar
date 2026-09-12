@@ -18,6 +18,7 @@ export interface WhatsAppTandoorOptions {
 export interface WhatsAppGanpatiOptions {
   idolName: string;
   size?: string;
+  deliveryOrPickup?: string;
   customNote?: string;
 }
 
@@ -108,13 +109,16 @@ export function getTandoorWhatsAppLink(options: WhatsAppTandoorOptions): string 
  * Ganpati Enquiry Message Builder (Section 6)
  */
 export function getGanpatiWhatsAppLink(options: WhatsAppGanpatiOptions): string {
-  const { idolName, size, customNote } = options;
+  const { idolName, size, deliveryOrPickup, customNote } = options;
   
   let msg = `Hello ${BUSINESS_CONFIG.brandName},\n\n`;
   msg += `I am interested in:\n\n`;
   msg += `Ganpati: ${idolName}\n`;
   if (size) {
     msg += `Size: ${size}\n`;
+  }
+  if (deliveryOrPickup) {
+    msg += `Option: ${deliveryOrPickup}\n`;
   }
   
   msg += `\nPlease share the available size, price and availability.\n`;
@@ -225,9 +229,13 @@ export function getContactPageWhatsAppLink(): string {
 /**
  * General Business Enquiry Message Builder (Section 9)
  */
-export function getGeneralWhatsAppLink(): string {
+export function getGeneralWhatsAppLink(customTopic?: string): string {
   let msg = `Hello ${BUSINESS_CONFIG.brandName},\n\n`;
-  msg += `I would like to know more about your pottery products.\n\n`;
+  if (customTopic && customTopic.trim()) {
+    msg += `I would like to enquire about: ${customTopic.trim()}.\n\n`;
+  } else {
+    msg += `I would like to know more about your pottery products.\n\n`;
+  }
   msg += `Please share the available products, prices and details.\n\n`;
   msg += `Thank you.`;
 
