@@ -28,8 +28,11 @@ export interface TranslationDictionary {
   };
   cta: {
     whatsappQuote: string;
+    whatsappQuoteShort: string;
     addToEnquiry: string;
+    addToEnquiryShort: string;
     addedToEnquiry: string;
+    addedToEnquiryShort: string;
     shareProduct: string;
     callStore: string;
     storeLocation: string;
@@ -82,6 +85,7 @@ export interface TranslationDictionary {
     all: string;
     back: string;
     clear: string;
+    details: string;
   };
 }
 
@@ -124,8 +128,11 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     },
     cta: {
       whatsappQuote: 'Instant WhatsApp Quote',
+      whatsappQuoteShort: 'WhatsApp',
       addToEnquiry: 'Add to Multi-Product Enquiry',
+      addToEnquiryShort: '+ Enquiry',
       addedToEnquiry: 'Added to Enquiry List',
+      addedToEnquiryShort: 'Enquired',
       shareProduct: 'Share Product',
       callStore: 'Call Store',
       storeLocation: 'Store Location',
@@ -178,6 +185,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
       all: 'All Products',
       back: 'Back',
       clear: 'Clear Filters',
+      details: 'Details',
     },
   },
 
@@ -219,8 +227,11 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     },
     cta: {
       whatsappQuote: 'વોટ્સએપ ભાવ પૂછપરછ',
+      whatsappQuoteShort: 'વોટ્સએપ',
       addToEnquiry: 'યાદીમાં ઉમેરો',
+      addToEnquiryShort: '+ યાદી',
       addedToEnquiry: 'યાદીમાં ઉમેરેલ છે',
+      addedToEnquiryShort: 'ઉમેરેલ છે',
       shareProduct: 'શેર કરો',
       callStore: 'સ્ટોર પર કોલ કરો',
       storeLocation: 'સ્ટોર લોકેશન',
@@ -273,6 +284,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
       all: 'તમામ પ્રોડક્ટ્સ',
       back: 'પાછા જાઓ',
       clear: 'ફિલ્ટર્સ દૂર કરો',
+      details: 'વિગતો',
     },
   },
 
@@ -314,8 +326,11 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     },
     cta: {
       whatsappQuote: 'व्हाट्सएप पूछताछ',
+      whatsappQuoteShort: 'व्हाट्सएप',
       addToEnquiry: 'सूची में जोड़ें',
+      addToEnquiryShort: '+ पूछताछ',
       addedToEnquiry: 'सूची में जोड़ा गया',
+      addedToEnquiryShort: 'जोड़ा गया',
       shareProduct: 'शेयर करें',
       callStore: 'स्टोर को कॉल करें',
       storeLocation: 'स्टोर लोकेशन',
@@ -368,6 +383,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
       all: 'सभी उत्पाद',
       back: 'वापस जाएं',
       clear: 'फ़िल्टर साफ़ करें',
+      details: 'विवरण',
     },
   },
 };
