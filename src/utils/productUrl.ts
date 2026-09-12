@@ -1,14 +1,14 @@
 import { Product } from '../types';
+import { BUSINESS_CONFIG } from '../config/business';
 
 /**
- * Gets the canonical relative path for a product (e.g. /pottery/matka/traditional-clay-matka-with-tap)
+ * Gets the canonical relative path for a product (e.g. /product/commercial-heavy-duty-drum-tandoor)
  */
 export function getProductCanonicalPath(product: Product): string {
   if (!product || !product.slug) {
-    return '/pottery';
+    return '/products';
   }
-  const category = product.category ? product.category.toLowerCase() : 'all';
-  return `/pottery/${category}/${product.slug}`;
+  return `/product/${product.slug}`;
 }
 
 /**
@@ -19,16 +19,20 @@ export function buildProductUrl(product: Product, customOrigin?: string): string
   
   const path = getProductCanonicalPath(product);
   
-  // Use custom origin, environment variable, window origin, or fallback
+  // Use custom origin, environment variable, window origin, or business config fallback
   let origin = customOrigin || (import.meta.env && import.meta.env.VITE_SITE_URL);
+  
   if (!origin && typeof window !== 'undefined' && window.location.origin) {
     origin = window.location.origin;
   }
-  if (!origin) {
-    origin = 'https://shreematlaghar.com';
+
+  // Never share localhost or development URLs in product share links
+  if (!origin || origin.includes('localhost') || origin.includes('127.0.0.1')) {
+    origin = BUSINESS_CONFIG.siteUrl || 'https://shreematlaghar.vercel.app';
   }
 
   // Ensure no trailing slash on origin
   const cleanOrigin = origin.replace(/\/+$/, '');
   return `${cleanOrigin}${path}`;
 }
+

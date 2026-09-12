@@ -20,6 +20,7 @@ export const BUSINESS_CONFIG: BusinessConfig = {
   googleMapsUrl: "https://maps.app.goo.gl/gA2q7yhnomvR9VH98",
   instagramUrl: "https://instagram.com/shreematlaghar",
   facebookUrl: "https://facebook.com/shreematlaghar",
+  siteUrl: (import.meta.env && import.meta.env.VITE_SITE_URL) || "https://shreematlaghar.vercel.app",
 };
 
 export const SOCIAL_LINKS = [

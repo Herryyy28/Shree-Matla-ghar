@@ -64,6 +64,7 @@ export interface BusinessConfig {
   instagramUrl: string;
   facebookUrl: string;
   youtubeUrl?: string;
+  siteUrl?: string;
 }
 
 export interface WholesaleEnquiry {

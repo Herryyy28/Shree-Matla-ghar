@@ -18,11 +18,17 @@ export const ProductDetailPage: React.FC = () => {
   const { slug, category } = useParams<{ slug?: string; category?: string }>();
   const navigate = useNavigate();
 
-  // Find product by slug or category route param
-  const targetParam = slug || category;
-  const product = PRODUCTS.find(
-    (p) => p.slug === targetParam || p.id === targetParam || p.slug === slug
-  );
+  // Robust product resolution by slug or id, handling URL encoding and case sensitivity
+  const rawParam = (slug || category || '').trim();
+  const decodedParam = decodeURIComponent(rawParam).toLowerCase();
+
+  const product = PRODUCTS.find((p) => {
+    return (
+      p.slug.toLowerCase() === decodedParam ||
+      p.id.toLowerCase() === decodedParam ||
+      (slug && p.slug.toLowerCase() === decodeURIComponent(slug).toLowerCase())
+    );
+  });
 
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [selectedSize, setSelectedSize] = useState<string>('');
@@ -47,6 +53,12 @@ export const ProductDetailPage: React.FC = () => {
       }
 
       trackProductView(product.id, product.name, product.category);
+    } else {
+      updateSeoMetaData({
+        title: `Pottery Product Not Found | ${BUSINESS_CONFIG.brandName}`,
+        description: 'The requested pottery product was not found.',
+        canonicalPath: '/product/not-found',
+      });
     }
   }, [product]);
 
@@ -60,7 +72,7 @@ export const ProductDetailPage: React.FC = () => {
         </p>
         <div className="pt-2 flex items-center justify-center gap-3 flex-wrap">
           <Link
-            to="/pottery"
+            to="/products"
             className="px-5 py-2.5 bg-clay-500 hover:bg-clay-600 text-white font-bold text-xs rounded-xl shadow-sm transition-colors"
           >
             Browse Pottery
@@ -79,11 +91,13 @@ export const ProductDetailPage: React.FC = () => {
     );
   }
 
+  const productUrl = buildProductUrl(product);
   const whatsappUrl = getProductWhatsAppLink({
     productName: product.name,
     category: product.category,
     size: selectedSize,
     customNote: customNote.trim() || undefined,
+    productUrl,
   });
 
   const relatedProducts = PRODUCTS.filter(

@@ -38,8 +38,16 @@ export function updateSeoMetaData(props: SeoProps) {
   }
   metaDesc.setAttribute('content', description);
 
-  // Open Graph
-  const fullCanonicalUrl = product ? buildProductUrl(product) : window.location.origin + canonicalPath;
+  // Open Graph & Canonical URL Resolution
+  let siteOrigin = typeof window !== 'undefined' ? window.location.origin : '';
+  if (!siteOrigin || siteOrigin.includes('localhost') || siteOrigin.includes('127.0.0.1')) {
+    siteOrigin = BUSINESS_CONFIG.siteUrl || 'https://shreematlaghar.vercel.app';
+  }
+  const cleanSiteOrigin = siteOrigin.replace(/\/+$/, '');
+  const fullCanonicalUrl = product 
+    ? buildProductUrl(product) 
+    : `${cleanSiteOrigin}${canonicalPath.startsWith('/') ? canonicalPath : `/${canonicalPath}`}`;
+
   setMetaTag('property', 'og:title', document.title);
   setMetaTag('property', 'og:description', description);
   setMetaTag('property', 'og:image', image);

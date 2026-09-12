@@ -8,7 +8,7 @@ import { ImageWithFallback } from '../common/ImageWithFallback';
 import { FavoriteButton } from '../common/FavoriteButton';
 import { BulkEnquiryDrawer } from '../common/BulkEnquiryDrawer';
 import { useEnquiry } from '../../context/EnquiryContext';
-import { getProductCanonicalPath } from '../../utils/productUrl';
+import { getProductCanonicalPath, buildProductUrl } from '../../utils/productUrl';
 
 interface ProductCardProps {
   product: Product;
@@ -21,10 +21,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   const isEnquired = isInEnquiry(product.id);
 
+  const productUrl = buildProductUrl(product);
   const whatsappUrl = getProductWhatsAppLink({
     productName: product.name,
     category: product.category,
     priceLabel: product.priceLabel,
+    productUrl,
   });
 
   return (

@@ -6,6 +6,7 @@ export interface WhatsAppProductOptions {
   size?: string;
   priceLabel?: string;
   customNote?: string;
+  productUrl?: string;
 }
 
 export interface WhatsAppTandoorOptions {
@@ -58,10 +59,10 @@ export function buildWhatsAppLink(message: string): string {
  * Product Enquiry Message Builder (Section 4)
  */
 export function getProductWhatsAppLink(options: WhatsAppProductOptions): string {
-  const { productName, category, size, customNote } = options;
+  const { productName, category, size, customNote, productUrl } = options;
   
   let msg = `Hello ${BUSINESS_CONFIG.brandName},\n\n`;
-  msg += `I am interested in the following pottery product:\n\n`;
+  msg += `I am interested in:\n\n`;
   msg += `Product: ${productName}\n`;
   if (category) {
     msg += `Category: ${category}\n`;
@@ -71,6 +72,10 @@ export function getProductWhatsAppLink(options: WhatsAppProductOptions): string 
   }
   
   msg += `\nPlease share the price, available options and availability.\n`;
+
+  if (productUrl) {
+    msg += `\nProduct Link:\n${productUrl}\n`;
+  }
 
   if (customNote && customNote.trim()) {
     msg += `\nAdditional Requirement:\n${customNote.trim()}\n`;
