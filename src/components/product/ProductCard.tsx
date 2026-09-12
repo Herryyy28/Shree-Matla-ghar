@@ -90,7 +90,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
         {/* Content */}
         <div className="p-4 sm:p-5 flex flex-col flex-grow justify-between">
-          <div className="flex flex-col justify-between flex-grow">
+          <div className="space-y-2">
             <div>
               <div className="flex items-center gap-1.5 text-[11px] sm:text-xs font-semibold text-clay-600 uppercase tracking-wider mb-1">
                 <Tag className="w-3 h-3 text-clay-400 shrink-0" />
@@ -123,7 +123,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             </div>
 
             {/* Compact Activity Counters */}
-            <ProductActivityBadge productId={product.id} variant="compact" className="mt-2.5 pt-2 border-t border-clay-100/80" />
+            <ProductActivityBadge productId={product.id} variant="compact" className="pt-2 border-t border-clay-100/80" />
           </div>
 
           {/* Pricing & Actions */}
